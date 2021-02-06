@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="NLPAnnotator" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmu_time_awb.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmu_us_kal.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmudict04.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmulex.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/cmutimelex.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/en_us.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/freetts.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/freetts-jsapi10.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/jsapi.jar" />
+    <libelement value="file://C:/Users/parks8/Downloads/freetts-1.2.2-bin/freetts-1.2/lib/mbrola.jar" />
+    <conelement value="org.eclipse.buildship.core.gradleclasspathcontainer" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src/main/java" expected_position="0" />
+      <src_folder value="file://$MODULE_DIR$/src/test/java" expected_position="1" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/out" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+  </component>
+</module>

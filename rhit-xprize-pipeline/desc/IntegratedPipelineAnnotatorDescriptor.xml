@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="MemoryLoadAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/MemoryLoadAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="BlockDetectionAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/BlockDetectionAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="PointingDataAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/PointingDataAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="SpeechToTextJavaAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/SpeechToTextJavaAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="NLPProcessorAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/NLPProcessorAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="ColorConfidenceAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/ColorConfidenceAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="SpatialRelationshipDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/SpatialRelationshipDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="MetadataAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/MetadataAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="AggregateConfidenceAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/AggregateConfidenceAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="OutputAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/OutputAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="CoordinateTransformationDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/CoordinateTransformationDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="ActionAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/ActionAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="ConfidenceFeedbackAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/ConfidenceFeedbackAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TextToSpeechAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/TextToSpeechAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="MemorySaveAnnotatorDescriptor">
+      <import location="/Users/cuiy1/Desktop/Senior Project/rhit-xprize-pipeline/desc/MemorySaveAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>CompoundAnnotator</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <flowConstraints>
+      <fixedFlow>
+<!--      	<node>MemoryLoadAnnotatorDescriptor</node>-->
+<!--        <node>BlockDetectionAnnotatorDescriptor</node>-->
+<!--        <node>PointingDataAnnotatorDescriptor</node>-->
+<!--        <node>SpatialRelationshipDescriptor</node>-->
+        <node>SpeechToTextJavaAnnotatorDescriptor</node>
+        <node>NLPProcessorAnnotatorDescriptor</node>
+        <node>ColorConfidenceAnnotatorDescriptor</node>
+        <node>MetadataAnnotatorDescriptor</node>
+        <node>AggregateConfidenceAnnotatorDescriptor</node>
+        <node>OutputAnnotatorDescriptor</node>
+        <node>CoordinateTransformationDescriptor</node>
+        <node>ConfidenceFeedbackAnnotatorDescriptor</node>
+        <node>ActionAnnotatorDescriptor</node>
+        <node>TextToSpeechAnnotatorDescriptor</node>
+        <node>MemorySaveAnnotatorDescriptor</node>
+      </fixedFlow>
+    </flowConstraints>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+  <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>

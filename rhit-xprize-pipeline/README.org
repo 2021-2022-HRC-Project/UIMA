@@ -1,0 +1,219 @@
+* Rose-Hulman AI XPrize Data Pipeline
+[[https://travis-ci.org/RHIT-XPrize/rhit-xprize-pipeline.svg?branch=master]]
+** Introduction
+
+This project is intended to allow for the usage of different AI
+components across different languages and possibly even machines all
+linked together using [[https://uima.apache.org][UIMA]], the Unstructured Information Management
+Architecture.
+
+The program does not communicate directly with the robot, but instead will run
+on a separate machine and sent commands to the robot over a network or socket.
+A seperate program will run on [[http://www.ros.org][ROS]], the robotic
+operating system, and will be in charge of processing the data from the robot's sensors
+to return to the pipeline, and converting pipeline output into abstract commands for the robot
+to execute.
+
+** Dependencies
+- Java 1.8
+- UIMA
+- Gradle
+
+** Installation
+UIMA development works best in Eclipse using the UIMA Eclipse Plugins.
+There is a tutorial for setting it up in sections 3.1.1 and 3.1.2 of 
+[[https://uima.apache.org/downloads/releaseDocs/2.1.0-incubating/docs/html/overview_and_setup/overview_and_setup.html#ugr.ovv.eclipse_setup][this document]].
+UIMA and other required libraries for the project are installed through the Gradle build,
+make sure you have the latest version of Gradle installed according to one of the sets of
+instructions [[https://gradle.org/install/][here]]
+
+** How to Write an Annotator
+Annotators are the fundamental building block of the UIMA framework,
+([[https://uima.apache.org/downloads/releaseDocs/2.1.0-incubating/docs/html/tutorials_and_users_guides/tutorials_and_users_guides.html][see here for a UIMA tutorial]]). As such, adding Annotators (and
+Annotations) is the key way of adding functionality to our system.
+
+Annotators can be written in effectively any language, but no matter
+what they have to be bound to a logical Annotator in Java. We will
+define a _Core Annotator_ to be an Annotator written completely in
+Java, and an _External Annotator_ to be an Annotator written primarily
+in another language.
+*** Writing a Core Annotator
+Right click on the =desc= folder and create a new "Analysis Engine
+Descriptor File." Use the appropriate Eclipse view to edit the
+underlying XML file according to your needs, adding Parameters and
+Types as necessary. See [[https://uima.apache.org/doc-uima-annotator.html][this tutorial]] on how to create a simple
+Annotator. Create the corresponding Java Annotator, add the
+implementation details, and set it as the relevant class in the
+descriptor file.
+
+If you want your analysis engine to be part of an Aggregate Analysis
+Engine (essentially a chain of Annotators, each of which reliant upon
+the output of earlier Annotators; more details [[https://uima.apache.org/downloads/releaseDocs/2.1.0-incubating/docs/html/tutorials_and_users_guides/tutorials_and_users_guides.html#ugr.tug.aae.building_aggregates][here]]), note that you'll
+also have to create a separate Analysis Engine Descriptor File to
+define the chain you wish to create.
+
+All Annotators, in the end, are combined together into the
+=MainAnalysisEngine=, an Aggregate Engine and the only one loaded in
+by the =main= method in code. The pipeline is set up as a tree, and as
+such, to add a new Annotator, you must add it to the appropriate
+Aggregate Analysis Engine (be that the =MainAnalysisEngine= or one of
+its sub-Annotators) for it to be put in use.
+*** Writing an External Annotator
+Perform the same steps necessary for creating a Core Annotator, but
+instead of extending =JCasAnnotator_ImplBase=, extend one of the
+various abstract classes used for communicating with external
+annotators (such as =HttpAnnotator=). These abstract classes isolate
+the communication logic and ensure your Annotator adheres to the
+communication protocol. Details on what is required for the different
+abstract Annotators are given below.
+
+In the external language, write or use corresponding code that adheres
+to whatever communication protocol you're using. Details on each
+protocol are given below if you need to implement something not yet
+created for your language of choice.
+
+/Please do not integrate your communication protocol into the same/
+/class / structure as your Annotator. Share your work with others and/
+/keep everyone from rewriting the same code./
+
+After that, use the interface provided by the language to implement
+your annotator accordingly. Most if not all of the communication
+protocols deal with the JSON-ified CAS object, which has the form:
+#+BEGIN_SRC javascript
+  {
+    "_context": {
+      "_types": {
+        "DocumentAnnotation": {
+          "_id": "uima.tcas.DocumentAnnotation",
+          "_feature_types": {
+            "sofa": "_ref"
+          }
+        },
+        "Sofa": {
+          "_id": "uima.cas.Sofa",
+          "_feature_types": {
+            "sofaArray": "_ref"
+          }
+        },
+        "Annotation": {
+          "_id": "uima.tcas.Annotation",
+          "_feature_types": {
+            "sofa": "_ref"
+          },
+          "_subtypes": [
+            "DocumentAnnotation"
+          ]
+        },
+        "AnnotationBase": {
+          "_id": "uima.cas.AnnotationBase",
+          "_feature_types": {
+            "sofa": "_ref"
+          },
+          "_subtypes": [
+            "Annotation"
+          ]
+        },
+        "TOP": {
+          "_id": "uima.cas.TOP",
+          "_subtypes": [
+            "AnnotationBase",
+            "Sofa"
+          ]
+        }
+      }
+    },
+    "_views": {
+      "_InitialView": {
+        "DocumentAnnotation": [
+          {
+            "sofa": 1,
+            "begin": 0,
+            "end": 62,
+            "language": "x-unspecified"
+          }
+        ]
+      }
+    },
+    "_referenced_fss": {
+      "1": {
+        "_type": "Sofa",
+        "sofaNum": 1,
+        "sofaID": "_InitialView",
+        "mimeType": "text",
+        "sofaString": "This is some document text."
+      }
+    }
+  }
+#+END_SRC
+**** =HttpAnnotator= Communication Protocol
+***** Description
+Java annotators will act as clients to the external annotators, which
+will act as servers, the two of which will communicate over HTTP.
+
+Most data will be sent in JSON format. These JSON blobs will be
+un-prettified and written on a /single line/. The examples below are
+prettified, and as such /are not valid/, however for readability we've
+formatted them as such.
+***** Usage
+- In the global configuration file (written as a JSON object), write
+  down the Annotator's name and the full internet address that will be
+  used to access it. An example is given below.
+- The superclass =HttpAnnotator= uses =addFieldToAnnotation()= to
+  convert from the fields of JSON it receives to usable data. The
+  method only works with primitives, so if you have something more
+  complex in your Annotation you will have to override the method to
+  suit your needs. It is suggested that you still use
+  =addFieldToAnnotation()= to convert primitive fields.
+- The external Annotator should expect a configuration message once
+  the connection is established.
+***** Example Configuration
+Each annotator pair will use a set address and port number read in
+from a JSON configuration file formatted as a list of objects in this
+form:
+#+BEGIN_SRC javascript
+  {
+      "annotator_name": {
+          "address": "123.45.67.89",
+          "port": 1234
+      },
+      "other_annotator_name": {
+          "address": "123.45.67.80",
+          "port": 4321
+      }
+  }
+#+END_SRC
+***** Communication
+Standard communications will use a multipart =POST= request. The body
+of this request will be a sequence of pertinent pieces of data, such
+as binary blobs of audio or video along with the JSON-ified CAS
+object. The various pieces of data must be agreed upon by both the
+sender and receiver, but the CAS will /always/ be transmitted.
+
+The server will then respond with an HTTP Response which, if
+successful, includes a JSON object with a list of annotations by type,
+where each of the fields of the goal annotation are specified as the
+body of the response:
+#+BEGIN_SRC javascript
+  {
+      "my_string_annotation": [
+          {
+              "begin": 0,
+              "end": 3,
+              "my_string_field": "bar"
+          },
+          {
+              "begin": 5,
+              "end": 10,
+              "my_string_field": "foo"
+          }
+      ],
+      "my_int_annotation": [
+          {
+              "begin": 12,
+              "end": 13,
+              "my_int_field": 5,
+              "my_other_string_field": "foobar"
+          }
+      ]
+  }
+#+END_SRC
