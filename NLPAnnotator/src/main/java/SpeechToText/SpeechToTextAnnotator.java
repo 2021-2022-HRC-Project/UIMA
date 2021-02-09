@@ -16,7 +16,6 @@ import java.awt.event.ActionListener;
 
 public class SpeechToTextAnnotator extends Annotator {
     private SpeechToTextResponseObserver responseObserver;
-    public SpeechToTextAnnotator(){}
     private Gson gson;
     private String resultString = "";
     private JTextArea response;
@@ -27,11 +26,21 @@ public class SpeechToTextAnnotator extends Annotator {
 
     //TODO: add a confirm button
     private JButton confirm;
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
+//        try {
+//            SpeechToTextAnnotator annotator = new SpeechToTextAnnotator();
+//            annotator.SetUpGUI();
+//            annotator.initializeActionListeners();
+////            streamingMicRecognize();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    public SpeechToTextAnnotator(){
         try {
-            SpeechToTextAnnotator annotator = new SpeechToTextAnnotator();
-            annotator.SetUpGUI();
-            annotator.initializeActionListeners();
+            this.SetUpGUI();
+            this.initializeActionListeners();
 //            streamingMicRecognize();
         } catch (Exception e) {
             e.printStackTrace();

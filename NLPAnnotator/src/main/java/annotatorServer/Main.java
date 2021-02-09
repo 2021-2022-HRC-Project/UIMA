@@ -22,7 +22,7 @@ public class Main {
 		
 		port(3001);
 		
-		Annotator speech = new SpeechToTextAnnotator();
+		Annotator speech = new SpeechToText.SpeechToTextAnnotator();
 		post("/Speech", speech);
 		Annotator metaData = new MetadataAnnotator();
 		post("/MetadataCompiler", metaData);
