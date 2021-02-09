@@ -3,6 +3,7 @@ import static spark.Spark.*;
 
 import MemoryLoad.MemoryLoadAnnotator;
 import MemorySave.MemorySaveAnnotator;
+import SpeechToText.SpeechToTextAnnotator;
 import com.google.gson.Gson;
 
 import Factories.NLPAnnotatorFactory;
