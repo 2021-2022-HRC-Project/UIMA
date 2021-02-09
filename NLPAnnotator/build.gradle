@@ -21,7 +21,7 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '2.20'
     compile 'com.github.goxr3plus:java-google-speech-api:8.0.0'
     compile group: 'net.sf.sociaal', name: 'freetts', version: '1.2.2'
-
+    implementation 'edu.stanford.nlp:stanford-corenlp:4.0.0'
     
     
     // Use JUnit test framework

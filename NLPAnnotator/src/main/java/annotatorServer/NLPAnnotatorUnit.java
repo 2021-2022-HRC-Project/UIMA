@@ -30,6 +30,7 @@ public class NLPAnnotatorUnit extends Annotator {
 		JSONObject jsonObj = new JSONObject(JSONRequest);
 		//Note there can be more than one text in the json
 		String result =	jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("SpokenText").getJSONObject(0).getString("text");
+		System.out.println("--------------Result:"+result);
 		SpokenPhrase phrase = request.buildDependencyTree(result);
 		String gsonString = "{" + unitWrapper + ": [";
 		boolean found = false;

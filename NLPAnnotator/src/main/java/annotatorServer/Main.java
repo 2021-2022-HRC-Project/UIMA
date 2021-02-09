@@ -11,6 +11,7 @@ import MetadataCompiler.MetadataAnnotator;
 import SpatialRelationGenerator.SpatialRelationAnnotator;
 import TextToSpeech.TextToSpeechAnnotator;
 import helloWorld.JavaHelloWorldAnnotator;
+import CoreNLP.*;
 
 public class Main {
 
@@ -26,7 +27,7 @@ public class Main {
 		post("/MetadataCompiler", metaData);
 		Annotator spatial = new SpatialRelationAnnotator();
 		post("/SpatialRelationGen", spatial);
-		Annotator handle = NLPFactory.createNLPAnnotator();
+		Annotator handle = new CoreNLPAnnotator();
 		post("/NLPUnit", handle);
 		Annotator feedback = new ConfidenceFeedbackAnnotator();
 		post("/Feedback", feedback);
