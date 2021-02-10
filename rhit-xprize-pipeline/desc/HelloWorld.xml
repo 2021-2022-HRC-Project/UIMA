@@ -4,10 +4,10 @@
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
     <delegateAnalysisEngine key="PythonHelloWorldAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/PythonHelloWorldAnnotatorDescriptor.xml"/>
+      <import location="./PythonHelloWorldAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="JavaHelloWorldAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/JavaHelloWorldAnnotatorDescriptor.xml"/>
+      <import location="./JavaHelloWorldAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>

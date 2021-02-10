@@ -3,8 +3,7 @@ import static spark.Spark.*;
 
 import MemoryLoad.MemoryLoadAnnotator;
 import MemorySave.MemorySaveAnnotator;
-import SpeechToText.SpeechToTextAnnotator;
-import com.google.gson.Gson;
+import SpeechToText.*;
 
 import Factories.NLPAnnotatorFactory;
 import Feedback.ConfidenceFeedbackAnnotator;
@@ -22,7 +21,7 @@ public class Main {
 		
 		port(3001);
 		
-		Annotator speech = new SpeechToText.SpeechToTextAnnotator();
+		Annotator speech = new SpeechToTextAnnotator();
 		post("/Speech", speech);
 		Annotator metaData = new MetadataAnnotator();
 		post("/MetadataCompiler", metaData);

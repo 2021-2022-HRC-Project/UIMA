@@ -4,7 +4,7 @@
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
     <delegateAnalysisEngine key="SpeechToTextJavaAnnotatorDescriptor">
-      <import location="\Users\parks8\Downloads\utility-scripts-master\utility-scripts-master\rhit-xprize-pipeline\desc\SpeechToTextJavaAnnotatorDescriptor.xml"/>
+      <import location="./SpeechToTextJavaAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>

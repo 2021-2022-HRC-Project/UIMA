@@ -4,22 +4,22 @@
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
     <delegateAnalysisEngine key="SpeechToTextAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/SpeechToTextAnnotatorDescriptor.xml"/>
+      <import location="./SpeechToTextAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="BlockDetectionAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/BlockDetectionAnnotatorDescriptor.xml"/>
+      <import location="./BlockDetectionAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="PointingDataAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/PointingDataAnnotatorDescriptor.xml"/>
+      <import location="./PointingDataAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="TextConfidenceAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/TextConfidenceAnnotatorDescriptor.xml"/>
+      <import location="./TextConfidenceAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="AggregateConfidenceAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/AggregateConfidenceAnnotatorDescriptor.xml"/>
+      <import location="./AggregateConfidenceAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="OutputAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/OutputAnnotatorDescriptor.xml"/>
+      <import location="./OutputAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>

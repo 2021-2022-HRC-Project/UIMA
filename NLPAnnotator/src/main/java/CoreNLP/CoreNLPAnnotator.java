@@ -38,6 +38,7 @@ public class CoreNLPAnnotator extends Annotator {
     @Override
     public String process(String request) throws IOException {
         System.out.println("!!!!!!");
+        System.err.println("JSON:" + request);
         JSONObject jsonObj = new JSONObject(request);
 
         String rawText = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("SpokenText").getJSONObject(0).getString("text");

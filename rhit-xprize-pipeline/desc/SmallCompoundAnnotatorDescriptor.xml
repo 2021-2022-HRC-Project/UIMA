@@ -4,16 +4,16 @@
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
     <delegateAnalysisEngine key="SpeechToTextJavaAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/SpeechToTextJavaAnnotatorDescriptor.xml"/>
+      <import location="./SpeechToTextJavaAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="SpatialRelationshipDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/SpatialRelationshipDescriptor.xml"/>
+      <import location="./SpatialRelationshipDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="MetadataAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/MetadataAnnotatorDescriptor.xml"/>
+      <import location="./MetadataAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="AggregateConfidenceAnnotatorDescriptor">
-      <import location="/Users/bathtj/Desktop/Senior Project/Repository/rhit-xprize-pipeline/desc/AggregateConfidenceAnnotatorDescriptor.xml"/>
+      <import location="./AggregateConfidenceAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
