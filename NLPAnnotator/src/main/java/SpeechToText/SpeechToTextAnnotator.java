@@ -54,7 +54,7 @@ public class SpeechToTextAnnotator extends Annotator {
         // you can comment the following line out if you care what it says
 //        output = "Pick up the red block.";
 //        SpokenTextJava type = new SpokenTextJava(resultString);
-        String output = "{"+unitWrapper+"["+"\"text\":\""+resultString+"\"]"+"}";
+        String output = "{"+unitWrapper+"[{\"text\":[\""+resultString+"\"]}]"+"}";
         System.out.println("Output Here: " + output + "************");
         return output;
     }
