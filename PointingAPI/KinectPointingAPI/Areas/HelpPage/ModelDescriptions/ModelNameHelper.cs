@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectAPI.Areas.HelpPage.ModelDescriptions
 {
     internal static class ModelNameHelper
     {

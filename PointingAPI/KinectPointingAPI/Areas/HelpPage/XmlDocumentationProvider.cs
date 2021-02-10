@@ -1,3 +1,4 @@
+using KinectAPI.Areas.HelpPage.ModelDescriptions;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -5,9 +6,8 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using KinectPointingAPI.Areas.HelpPage.ModelDescriptions;
 
-namespace KinectPointingAPI.Areas.HelpPage
+namespace KinectAPI.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
-using System.Web.SessionState;
-using Newtonsoft.Json.Linq;
 
 namespace KinectPointingAPI.Controllers
 {

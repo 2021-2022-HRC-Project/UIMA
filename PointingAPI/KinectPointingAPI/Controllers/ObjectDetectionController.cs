@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Http;
-using Microsoft.Kinect;
-using System.Threading;
-using System.Drawing;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System.Windows;
-using Point = System.Drawing.Point;
-using System.IO;
-using System.Web.Http.Results;
-using System.Threading.Tasks;
-
+﻿using HRC_Datatypes;
 using KinectPointingAPI.Image_Processing;
-using HRC_Datatypes;
-using Newtonsoft.Json.Linq;
 using KinectPointingAPI.Sensor;
+using Microsoft.Kinect;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Threading;
+using System.Web.Http;
+using System.Web.Http.Results;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Point = System.Drawing.Point;
 
 namespace KinectPointingAPI.Controllers
 {
@@ -65,7 +63,7 @@ namespace KinectPointingAPI.Controllers
                     dataReceived = true;
                 }
             }
-            
+
             dataReceived = false;
             while (!dataReceived)
             {

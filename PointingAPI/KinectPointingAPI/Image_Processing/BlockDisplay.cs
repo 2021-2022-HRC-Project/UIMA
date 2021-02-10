@@ -1,10 +1,9 @@
-﻿using System;
-using System.Drawing;
-using Emgu.CV;
-using Emgu.CV.UI;
+﻿using Emgu.CV;
 using Emgu.CV.Structure;
-
+using Emgu.CV.UI;
 using HRC_Datatypes;
+using System;
+using System.Drawing;
 
 namespace KinectPointingAPI.Image_Processing
 {
@@ -32,7 +31,7 @@ namespace KinectPointingAPI.Image_Processing
         {
             ImageViewer viewer = new ImageViewer();
             CvInvoke.Resize(img, img, new Size(OUTPUT_WIDTH, OUTPUT_HEIGHT));
-            
+
             viewer.Image = img;
             viewer.Size = new Size(OUTPUT_WINDOW_WIDTH, OUTPUT_WINDOW_HEIGHT);
             viewer.ShowDialog();

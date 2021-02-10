@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace KinectPointingAPI.Areas.HelpPage
+namespace KinectAPI.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

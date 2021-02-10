@@ -13,7 +13,7 @@ namespace AntsCode.Util
     public class MultipartParser
     {
         public MultipartParser(Stream stream)
-        {   
+        {
             this.Parse(stream, Encoding.UTF8);
         }
 

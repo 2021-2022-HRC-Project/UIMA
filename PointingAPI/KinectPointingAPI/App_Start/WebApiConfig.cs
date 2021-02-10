@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Web.Http;
 
-namespace KinectPointingAPI
+namespace KinectAPI
 {
     public static class WebApiConfig
     {
@@ -13,7 +10,7 @@ namespace KinectPointingAPI
             // Web API configuration and services
 
             // Web API routes
-            config.MapHttpAttributeRoutes(new CustomInheritanceRouteProvider());
+            config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -28,4 +25,3 @@ namespace KinectPointingAPI
         }
     }
 }
-

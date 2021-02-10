@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace KinectPointingAPI.Areas.HelpPage
+namespace KinectAPI.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

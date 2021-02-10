@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectAPI.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {

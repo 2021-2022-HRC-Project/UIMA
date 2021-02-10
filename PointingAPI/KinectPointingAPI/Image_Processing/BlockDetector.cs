@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using Emgu.CV.Util;
+using HRC_Datatypes;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Util;
-
-using HRC_Datatypes;
 
 namespace KinectPointingAPI.Image_Processing
 {
@@ -23,7 +22,7 @@ namespace KinectPointingAPI.Image_Processing
             height = img.Height;
 
             // Threshold out bakground
-            Image <Gray, Byte> grayImg = img.Convert<Gray, Byte>();
+            Image<Gray, Byte> grayImg = img.Convert<Gray, Byte>();
             Image<Gray, Byte> backgroundMask = new Image<Gray, Byte>(width, height);
             double threshold_value = CvInvoke.Threshold(grayImg, backgroundMask, 0, 255, ThresholdType.Otsu);
 
@@ -122,11 +121,11 @@ namespace KinectPointingAPI.Image_Processing
         {
             int largestContourIdx = 0;
             double largestContourArea = -1;
-            for(int i = 0; i < contours.Size; i++)
+            for (int i = 0; i < contours.Size; i++)
             {
                 VectorOfPoint currContour = contours[i];
                 double contourArea = CvInvoke.ContourArea(currContour);
-                if(contourArea > largestContourArea)
+                if (contourArea > largestContourArea)
                 {
                     largestContourIdx = i;
                     largestContourArea = contourArea;
@@ -139,7 +138,7 @@ namespace KinectPointingAPI.Image_Processing
         public VectorOfVectorOfPoint FilterSmallAreaContours(VectorOfVectorOfPoint contours)
         {
             VectorOfVectorOfPoint filteredContours = new VectorOfVectorOfPoint();
-            for(int i = 0; i < contours.Size; i++)
+            for (int i = 0; i < contours.Size; i++)
             {
                 VectorOfPoint currContour = contours[i];
                 double contourArea = CvInvoke.ContourArea(currContour);
@@ -179,7 +178,7 @@ namespace KinectPointingAPI.Image_Processing
         {
             List<BlockData> allBlockDetails = new List<BlockData>();
             int currBlockId = 1;
-            foreach(Point center in centers)
+            foreach (Point center in centers)
             {
                 Bgra color = image[center.Y, center.X];
                 allBlockDetails.Add(new BlockData(currBlockId, center.X, center.Y, color.Red, color.Green, color.Blue));

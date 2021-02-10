@@ -1,20 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-using Newtonsoft.Json.Linq;
-using System.Web.Http.Results;
-using System.Threading.Tasks;
-
-using Microsoft.Kinect;
-using System.Drawing;
-
+﻿using HRC_Datatypes;
 using KinectPointingAPI.Image_Processing;
-using HRC_Datatypes;
-using System.Threading;
-using System.Windows.Media.Imaging;
-using System.Windows;
-using System.IO;
-using System.Windows.Media;
+using Microsoft.Kinect;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Threading;
+using System.Web.Http;
+using System.Web.Http.Results;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace KinectPointingAPI.Controllers
 {
@@ -82,7 +79,7 @@ namespace KinectPointingAPI.Controllers
                 Dictionary<string, double> blockDetails = new Dictionary<string, double>();
 
                 int id = blockString["id"].ToObject<int>();
-                double confidence  = blockString["confidence"].ToObject<double>();
+                double confidence = blockString["confidence"].ToObject<double>();
 
                 blockDetails.Add("id", id);
                 this.allBlocks.Add(blockDetails);

@@ -1,6 +1,6 @@
 using System;
 
-namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectAPI.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

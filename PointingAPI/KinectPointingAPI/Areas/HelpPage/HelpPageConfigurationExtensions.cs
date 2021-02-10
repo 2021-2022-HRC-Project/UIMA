@@ -1,3 +1,5 @@
+using KinectAPI.Areas.HelpPage.ModelDescriptions;
+using KinectAPI.Areas.HelpPage.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +13,8 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using KinectPointingAPI.Areas.HelpPage.ModelDescriptions;
-using KinectPointingAPI.Areas.HelpPage.Models;
 
-namespace KinectPointingAPI.Areas.HelpPage
+namespace KinectAPI.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

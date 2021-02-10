@@ -1,18 +1,14 @@
-﻿using System;
+﻿using HRC_Datatypes;
+using KinectPointingAPI.Sensor;
+using Microsoft.Kinect;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Numerics;
-using Microsoft.Kinect;
-using Newtonsoft.Json;
 using System.Threading;
+using System.Web.Http;
 using System.Web.Http.Results;
 using System.Windows.Media.Media3D;
-using Newtonsoft.Json.Linq;
-using HRC_Datatypes;
-using KinectPointingAPI.Sensor;
 
 namespace KinectPointingAPI.Controllers
 {
@@ -69,7 +65,8 @@ namespace KinectPointingAPI.Controllers
                 int count = 0;
                 if (bodyFrame.BodyCount > 0)
                 {
-                    foreach (Body b in bodies) {
+                    foreach (Body b in bodies)
+                    {
                         if (b.IsTracked)
                         {
                             System.Diagnostics.Debug.WriteLine("Found body frame.");
@@ -126,7 +123,7 @@ namespace KinectPointingAPI.Controllers
         private List<BlockData> GetBlocks(JToken allAnnotations)
         {
             JToken detectedBlocks = allAnnotations["DetectedBlock"];
-            if(detectedBlocks == null)
+            if (detectedBlocks == null)
             {
                 return new List<BlockData>();
             }
@@ -156,7 +153,7 @@ namespace KinectPointingAPI.Controllers
 
         private void ComputeConfidenceScores(Tuple<JointType, JointType> bone, Dictionary<JointType, CameraSpacePoint> jointPoints, List<BlockData> blocks)
         {
-            JointType handCenterFixture = bone.Item1; 
+            JointType handCenterFixture = bone.Item1;
             JointType fingerEndFixture = bone.Item2;
             Vector3D pointingVector = new Vector3D(
                jointPoints[fingerEndFixture].X - jointPoints[handCenterFixture].X,

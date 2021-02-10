@@ -1,10 +1,10 @@
+using KinectAPI.Areas.HelpPage.ModelDescriptions;
+using KinectAPI.Areas.HelpPage.Models;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using KinectPointingAPI.Areas.HelpPage.ModelDescriptions;
-using KinectPointingAPI.Areas.HelpPage.Models;
 
-namespace KinectPointingAPI.Areas.HelpPage.Controllers
+namespace KinectAPI.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.
