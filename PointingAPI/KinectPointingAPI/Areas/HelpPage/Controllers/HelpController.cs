@@ -1,10 +1,10 @@
-using KinectAPI.Areas.HelpPage.ModelDescriptions;
-using KinectAPI.Areas.HelpPage.Models;
+using KinectPointingAPI.Areas.HelpPage.ModelDescriptions;
+using KinectPointingAPI.Areas.HelpPage.Models;
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace KinectAPI.Areas.HelpPage.Controllers
+namespace KinectPointingAPI.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.
@@ -23,7 +23,7 @@ namespace KinectAPI.Areas.HelpPage.Controllers
             Configuration = config;
         }
 
-        public HttpConfiguration Configuration { get; private set; }
+        public HttpConfiguration Configuration { get; }
 
         public ActionResult Index()
         {
@@ -47,11 +47,10 @@ namespace KinectAPI.Areas.HelpPage.Controllers
 
         public ActionResult ResourceModel(string modelName)
         {
-            if (!String.IsNullOrEmpty(modelName))
+            if (!string.IsNullOrEmpty(modelName))
             {
                 ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
-                ModelDescription modelDescription;
-                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out modelDescription))
+                if (modelDescriptionGenerator.GeneratedModels.TryGetValue(modelName, out ModelDescription modelDescription))
                 {
                     return View(modelDescription);
                 }

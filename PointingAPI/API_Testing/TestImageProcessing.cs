@@ -1,7 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
-using HRC_Datatypes;
 using KinectPointingAPI.Image_Processing;
+using KinectPointingAPI.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -13,12 +13,12 @@ namespace API_Testing
     public class TestImageProcessing
     {
 
-        BlockDetector detector;
+        BlockDetector _detector;
 
         [TestInitialize]
         public void SetUp()
         {
-            detector = new BlockDetector();
+            _detector = new BlockDetector();
         }
 
         [TestMethod]
@@ -27,7 +27,7 @@ namespace API_Testing
             Image<Gray, Byte> inputImg = new Image<Gray, byte>(3, 3);
 
             Image<Gray, Byte> expectedImg = inputImg.Clone();
-            Image<Gray, Byte> actualImg = detector.FillMask(inputImg);
+            Image<Gray, Byte> actualImg = _detector.FillMask(inputImg);
 
             AssertImagesEqual(expectedImg, actualImg);
         }
@@ -35,16 +35,18 @@ namespace API_Testing
         [TestMethod]
         public void TestFillMask_NoHoles()
         {
-            Image<Gray, Byte> inputImg = new Image<Gray, byte>(3, 3);
+            Image<Gray, byte> inputImg = new Image<Gray, byte>(3, 3)
+            {
+                [0, 0] = new Gray(255),
+                [1, 0] = new Gray(255),
+                [2, 0] = new Gray(255),
+                [2, 1] = new Gray(255),
+                [2, 2] = new Gray(255)
+            };
             // Create L pattern in image
-            inputImg[0, 0] = new Gray(255);
-            inputImg[1, 0] = new Gray(255);
-            inputImg[2, 0] = new Gray(255);
-            inputImg[2, 1] = new Gray(255);
-            inputImg[2, 2] = new Gray(255);
 
             Image<Gray, Byte> expectedImg = inputImg.Clone();
-            Image<Gray, Byte> actualImg = detector.FillMask(inputImg);
+            Image<Gray, Byte> actualImg = _detector.FillMask(inputImg);
 
             AssertImagesEqual(expectedImg, actualImg);
         }
@@ -52,20 +54,22 @@ namespace API_Testing
         [TestMethod]
         public void TestFillMask_OneHole()
         {
-            Image<Gray, Byte> inputImg = new Image<Gray, byte>(3, 3);
+            Image<Gray, Byte> inputImg = new Image<Gray, byte>(3, 3)
+            {
+                [0, 0] = new Gray(255),
+                [0, 1] = new Gray(255),
+                [0, 2] = new Gray(255),
+                [1, 0] = new Gray(255),
+                [1, 2] = new Gray(255),
+                [2, 0] = new Gray(255),
+                [2, 1] = new Gray(255),
+                [2, 2] = new Gray(255)
+            };
             // Create hollow square pattern in image
-            inputImg[0, 0] = new Gray(255);
-            inputImg[0, 1] = new Gray(255);
-            inputImg[0, 2] = new Gray(255);
-            inputImg[1, 0] = new Gray(255);
-            inputImg[1, 2] = new Gray(255);
-            inputImg[2, 0] = new Gray(255);
-            inputImg[2, 1] = new Gray(255);
-            inputImg[2, 2] = new Gray(255);
 
             Image<Gray, Byte> expectedImg = inputImg.Clone();
             expectedImg[1, 1] = new Gray(255);
-            Image<Gray, Byte> actualImg = detector.FillMask(inputImg);
+            Image<Gray, Byte> actualImg = _detector.FillMask(inputImg);
 
             AssertImagesEqual(expectedImg, actualImg);
         }
@@ -74,10 +78,9 @@ namespace API_Testing
         public void TestFindColorAtCenter_NoCenters()
         {
             Point[] blockCenters = new Point[1];
-            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3);
-            inputImg[1, 1] = new Bgra(255, 255, 255, 0);
+            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3) {[1, 1] = new Bgra(255, 255, 255, 0)};
 
-            List<BlockData> actualColors = detector.FindColorAtCenters(blockCenters, inputImg);
+            List<BlockData> actualColors = _detector.FindColorAtCenters(blockCenters, inputImg);
 
             AssertColorsMatch(blockCenters, inputImg, actualColors);
         }
@@ -85,12 +88,12 @@ namespace API_Testing
         [TestMethod]
         public void TestFindColorAtCenter_SingleCenterDefaultColor()
         {
-            Point[] blockCenters = new Point[1] {
+            Point[] blockCenters = {
                 new Point(1, 1)
             };
             Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3);
 
-            List<BlockData> actualColors = detector.FindColorAtCenters(blockCenters, inputImg);
+            List<BlockData> actualColors = _detector.FindColorAtCenters(blockCenters, inputImg);
 
             AssertColorsMatch(blockCenters, inputImg, actualColors);
         }
@@ -98,13 +101,12 @@ namespace API_Testing
         [TestMethod]
         public void TestFindColorAtCenter_SingleCenterRedColor()
         {
-            Point[] blockCenters = new Point[1] {
+            Point[] blockCenters = {
                 new Point(1, 1)
             };
-            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3);
-            inputImg[1, 1] = new Bgra(10, 10, 200, 0);
+            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3) {[1, 1] = new Bgra(10, 10, 200, 0)};
 
-            List<BlockData> actualColors = detector.FindColorAtCenters(blockCenters, inputImg);
+            List<BlockData> actualColors = _detector.FindColorAtCenters(blockCenters, inputImg);
 
             AssertColorsMatch(blockCenters, inputImg, actualColors);
         }
@@ -112,13 +114,12 @@ namespace API_Testing
         [TestMethod]
         public void TestFindColorAtCenter_SingleCenterMaxColor()
         {
-            Point[] blockCenters = new Point[1] {
+            Point[] blockCenters = {
                 new Point(1, 1)
             };
-            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3);
-            inputImg[1, 1] = new Bgra(255, 255, 255, 0);
+            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3) {[1, 1] = new Bgra(255, 255, 255, 0)};
 
-            List<BlockData> actualColors = detector.FindColorAtCenters(blockCenters, inputImg);
+            List<BlockData> actualColors = _detector.FindColorAtCenters(blockCenters, inputImg);
 
             AssertColorsMatch(blockCenters, inputImg, actualColors);
         }
@@ -126,15 +127,16 @@ namespace API_Testing
         [TestMethod]
         public void TestFindColorAtCenter_MultipleCenters()
         {
-            Point[] blockCenters = new Point[2] {
+            Point[] blockCenters = {
                 new Point(1, 1),
                 new Point(2, 0)
             };
-            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3);
-            inputImg[0, 2] = new Bgra(255, 255, 255, 0);
-            inputImg[1, 1] = new Bgra(105, 5, 58, 0);
+            Image<Bgra, Byte> inputImg = new Image<Bgra, byte>(3, 3)
+            {
+                [0, 2] = new Bgra(255, 255, 255, 0), [1, 1] = new Bgra(105, 5, 58, 0)
+            };
 
-            List<BlockData> actualColors = detector.FindColorAtCenters(blockCenters, inputImg);
+            List<BlockData> actualColors = _detector.FindColorAtCenters(blockCenters, inputImg);
 
             AssertColorsMatch(blockCenters, inputImg, actualColors);
         }
@@ -148,7 +150,8 @@ namespace API_Testing
             {
                 for (int col = 0; col < imageDiff.Cols; col++)
                 {
-                    Assert.AreEqual(expectedPixelVal, imageDiff[row, col], String.Format("Mismatch found at entry with row = {0}, col = {1}.", row, col));
+                    Assert.AreEqual(expectedPixelVal, imageDiff[row, col],
+                        $"Mismatch found at entry with row = {row}, col = {col}.");
                 }
             }
         }
@@ -158,13 +161,13 @@ namespace API_Testing
             Assert.AreEqual(blockCenters.Length, actualColors.Count, "Number of items returned does not equal the number of centers provided.");
             for (int i = 0; i < blockCenters.Length; i++)
             {
-                Point currPoint = blockCenters[i];
-                int row = currPoint.Y;
-                int col = currPoint.X;
+                Point currentPoint = blockCenters[i];
+                int row = currentPoint.Y;
+                int col = currentPoint.X;
                 Bgra expectedColor = inputImg[row, col];
 
-                BlockData currBlock = actualColors[i];
-                Bgra actualColor = new Bgra(currBlock.bHueVal, currBlock.gHueVal, currBlock.rHueVal, 0);
+                BlockData currentBlock = actualColors[i];
+                Bgra actualColor = new Bgra(currentBlock.bHueVal, currentBlock.gHueVal, currentBlock.rHueVal, 0);
 
                 Assert.AreEqual(expectedColor, actualColor, "Mismatch found at point {0}, which corresponds to row = {1}, col = {2}.", i + 1, row, col);
             }

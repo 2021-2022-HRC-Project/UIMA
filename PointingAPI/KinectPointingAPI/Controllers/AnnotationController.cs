@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -11,29 +13,29 @@ namespace KinectPointingAPI.Controllers
         [Route("")]
         public JsonResult<T> Post()
         {
-            JToken casJSON = this.ParsePostBody();
-            this.ProcessRequest(casJSON);
-            return this.GenerateAnnotationResponse();
+            var casJson = ParsePostBody();
+            ProcessRequest(casJson);
+            return GenerateAnnotationResponse();
         }
 
         private JToken ParsePostBody()
         {
-            Task<string> task = this.GetPostBody();
+            Task<string> task = GetPostBody();
 
-            string casJSON = "";
+            string casJson = "";
             try
             {
                 task.Wait();
-                casJSON = task.Result;
+                casJson = task.Result;
             }
             catch
             {
-                System.Environment.Exit(-1);
+                Environment.Exit(-1);
             }
 
-            JObject payloadContent = JObject.Parse(casJSON);
-            System.Diagnostics.Debug.Write(payloadContent);
-            JToken allAnnotations = payloadContent["_views"]["_InitialView"];
+            JObject payloadContent = JObject.Parse(casJson);
+            Debug.Write(payloadContent);
+            JToken allAnnotations = payloadContent["_views"]?["_InitialView"];
 
             return allAnnotations;
         }

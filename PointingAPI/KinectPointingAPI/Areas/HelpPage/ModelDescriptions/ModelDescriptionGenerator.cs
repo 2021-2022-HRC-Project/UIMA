@@ -11,7 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Xml.Serialization;
 
-namespace KinectAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Generates model descriptions for given types.
@@ -19,7 +19,7 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
     public class ModelDescriptionGenerator
     {
         // Modify this to support more data annotation attributes.
-        private readonly IDictionary<Type, Func<object, string>> AnnotationTextGenerator = new Dictionary<Type, Func<object, string>>
+        private readonly IDictionary<Type, Func<object, string>> _annotationTextGenerator = new Dictionary<Type, Func<object, string>>
         {
             { typeof(RequiredAttribute), a => "Required" },
             { typeof(RangeAttribute), a =>
@@ -61,57 +61,51 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
         };
 
         // Modify this to add more default documentations.
-        private readonly IDictionary<Type, string> DefaultTypeDocumentation = new Dictionary<Type, string>
+        private readonly IDictionary<Type, string> _defaultTypeDocumentation = new Dictionary<Type, string>
         {
-            { typeof(Int16), "integer" },
-            { typeof(Int32), "integer" },
-            { typeof(Int64), "integer" },
-            { typeof(UInt16), "unsigned integer" },
-            { typeof(UInt32), "unsigned integer" },
-            { typeof(UInt64), "unsigned integer" },
-            { typeof(Byte), "byte" },
-            { typeof(Char), "character" },
-            { typeof(SByte), "signed byte" },
+            { typeof(short), "integer" },
+            { typeof(int), "integer" },
+            { typeof(long), "integer" },
+            { typeof(ushort), "unsigned integer" },
+            { typeof(uint), "unsigned integer" },
+            { typeof(ulong), "unsigned integer" },
+            { typeof(byte), "byte" },
+            { typeof(char), "character" },
+            { typeof(sbyte), "signed byte" },
             { typeof(Uri), "URI" },
-            { typeof(Single), "decimal number" },
-            { typeof(Double), "decimal number" },
-            { typeof(Decimal), "decimal number" },
-            { typeof(String), "string" },
+            { typeof(float), "decimal number" },
+            { typeof(double), "decimal number" },
+            { typeof(decimal), "decimal number" },
+            { typeof(string), "string" },
             { typeof(Guid), "globally unique identifier" },
             { typeof(TimeSpan), "time interval" },
             { typeof(DateTime), "date" },
             { typeof(DateTimeOffset), "date" },
-            { typeof(Boolean), "boolean" },
+            { typeof(bool), "boolean" },
         };
 
-        private Lazy<IModelDocumentationProvider> _documentationProvider;
+        private readonly Lazy<IModelDocumentationProvider> _documentationProvider;
 
         public ModelDescriptionGenerator(HttpConfiguration config)
         {
             if (config == null)
             {
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
             }
 
             _documentationProvider = new Lazy<IModelDocumentationProvider>(() => config.Services.GetDocumentationProvider() as IModelDocumentationProvider);
             GeneratedModels = new Dictionary<string, ModelDescription>(StringComparer.OrdinalIgnoreCase);
         }
 
-        public Dictionary<string, ModelDescription> GeneratedModels { get; private set; }
+        public Dictionary<string, ModelDescription> GeneratedModels { get; }
 
-        private IModelDocumentationProvider DocumentationProvider
-        {
-            get
-            {
-                return _documentationProvider.Value;
-            }
-        }
+        private IModelDocumentationProvider DocumentationProvider => _documentationProvider.Value;
 
         public ModelDescription GetOrCreateModelDescription(Type modelType)
         {
             if (modelType == null)
             {
-                throw new ArgumentNullException("modelType");
+                throw new ArgumentNullException(nameof(modelType));
             }
 
             Type underlyingType = Nullable.GetUnderlyingType(modelType);
@@ -120,9 +114,8 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
                 modelType = underlyingType;
             }
 
-            ModelDescription modelDescription;
             string modelName = ModelNameHelper.GetModelName(modelType);
-            if (GeneratedModels.TryGetValue(modelName, out modelDescription))
+            if (GeneratedModels.TryGetValue(modelName, out ModelDescription modelDescription))
             {
                 if (modelType != modelDescription.ModelType)
                 {
@@ -139,7 +132,7 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
                 return modelDescription;
             }
 
-            if (DefaultTypeDocumentation.ContainsKey(modelType))
+            if (_defaultTypeDocumentation.ContainsKey(modelType))
             {
                 return GenerateSimpleTypeModelDescription(modelType);
             }
@@ -230,9 +223,9 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
             NonSerializedAttribute nonSerialized = member.GetCustomAttribute<NonSerializedAttribute>();
             ApiExplorerSettingsAttribute apiExplorerSetting = member.GetCustomAttribute<ApiExplorerSettingsAttribute>();
 
-            bool hasMemberAttribute = member.DeclaringType.IsEnum ?
+            bool hasMemberAttribute = !(member.DeclaringType is null) && (member.DeclaringType.IsEnum ?
                 member.GetCustomAttribute<EnumMemberAttribute>() != null :
-                member.GetCustomAttribute<DataMemberAttribute>() != null;
+                member.GetCustomAttribute<DataMemberAttribute>() != null);
 
             // Display member only if all the followings are true:
             // no JsonIgnoreAttribute
@@ -251,8 +244,7 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
 
         private string CreateDefaultDocumentation(Type type)
         {
-            string documentation;
-            if (DefaultTypeDocumentation.TryGetValue(type, out documentation))
+            if (_defaultTypeDocumentation.TryGetValue(type, out string documentation))
             {
                 return documentation;
             }
@@ -271,8 +263,7 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
             IEnumerable<Attribute> attributes = property.GetCustomAttributes();
             foreach (Attribute attribute in attributes)
             {
-                Func<object, string> textGenerator;
-                if (AnnotationTextGenerator.TryGetValue(attribute.GetType(), out textGenerator))
+                if (_annotationTextGenerator.TryGetValue(attribute.GetType(), out Func<object, string> textGenerator))
                 {
                     annotations.Add(
                         new ParameterAnnotation

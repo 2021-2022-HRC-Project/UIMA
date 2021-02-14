@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace KinectAPI
+namespace KinectPointingAPI
 {
     public class BundleConfig
     {

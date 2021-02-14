@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HRC_Datatypes
+namespace KinectPointingAPI.Utilities
 {
     public class BlockData
     {
@@ -19,24 +19,25 @@ namespace HRC_Datatypes
             this.id = id;
             this.centerX = centerX;
             this.centerY = centerY;
-            this.rHueVal = rVal;
-            this.gHueVal = gVal;
-            this.bHueVal = bVal;
+            rHueVal = rVal;
+            gHueVal = gVal;
+            bHueVal = bVal;
         }
 
         public Dictionary<string, double> ConvertToDict()
         {
-            Dictionary<string, double> serializedFormat = new Dictionary<string, double>();
-
-            serializedFormat.Add("id", this.id);
-            serializedFormat.Add("center_X", this.centerX);
-            serializedFormat.Add("center_Y", this.centerY);
-            serializedFormat.Add("camera_space_center_X", this.cameraSpaceCenterX);
-            serializedFormat.Add("camera_space_center_Y", this.cameraSpaceCenterY);
-            serializedFormat.Add("camera_space_depth", this.cameraSpaceDepth);
-            serializedFormat.Add("r_hue", this.rHueVal);
-            serializedFormat.Add("g_hue", this.gHueVal);
-            serializedFormat.Add("b_hue", this.bHueVal);
+            Dictionary<string, double> serializedFormat = new Dictionary<string, double>
+            {
+                { "id", id },
+                { "center_X", centerX },
+                { "center_Y", centerY },
+                { "camera_space_center_X", cameraSpaceCenterX },
+                { "camera_space_center_Y", cameraSpaceCenterY },
+                { "camera_space_depth", cameraSpaceDepth },
+                { "r_hue", rHueVal },
+                { "g_hue", gHueVal },
+                { "b_hue", bHueVal }
+            };
 
             return serializedFormat;
         }

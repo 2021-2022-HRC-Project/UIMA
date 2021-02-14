@@ -1,10 +1,10 @@
-using KinectAPI.Areas.HelpPage.ModelDescriptions;
+using KinectPointingAPI.Areas.HelpPage.ModelDescriptions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
 
-namespace KinectAPI.Areas.HelpPage.Models
+namespace KinectPointingAPI.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.
@@ -30,7 +30,7 @@ namespace KinectAPI.Areas.HelpPage.Models
         /// <summary>
         /// Gets or sets the <see cref="ParameterDescription"/> collection that describes the URI parameters for the API.
         /// </summary>
-        public Collection<ParameterDescription> UriParameters { get; private set; }
+        public Collection<ParameterDescription> UriParameters { get; }
 
         /// <summary>
         /// Gets or sets the documentation for the request.
@@ -45,13 +45,7 @@ namespace KinectAPI.Areas.HelpPage.Models
         /// <summary>
         /// Gets the request body parameter descriptions.
         /// </summary>
-        public IList<ParameterDescription> RequestBodyParameters
-        {
-            get
-            {
-                return GetParameterDescriptions(RequestModelDescription);
-            }
-        }
+        public IList<ParameterDescription> RequestBodyParameters => GetParameterDescriptions(RequestModelDescription);
 
         /// <summary>
         /// Gets or sets the <see cref="ModelDescription"/> that describes the resource.
@@ -61,39 +55,31 @@ namespace KinectAPI.Areas.HelpPage.Models
         /// <summary>
         /// Gets the resource property descriptions.
         /// </summary>
-        public IList<ParameterDescription> ResourceProperties
-        {
-            get
-            {
-                return GetParameterDescriptions(ResourceDescription);
-            }
-        }
+        public IList<ParameterDescription> ResourceProperties => GetParameterDescriptions(ResourceDescription);
 
         /// <summary>
         /// Gets the sample requests associated with the API.
         /// </summary>
-        public IDictionary<MediaTypeHeaderValue, object> SampleRequests { get; private set; }
+        public IDictionary<MediaTypeHeaderValue, object> SampleRequests { get; }
 
         /// <summary>
         /// Gets the sample responses associated with the API.
         /// </summary>
-        public IDictionary<MediaTypeHeaderValue, object> SampleResponses { get; private set; }
+        public IDictionary<MediaTypeHeaderValue, object> SampleResponses { get; }
 
         /// <summary>
         /// Gets the error messages associated with this model.
         /// </summary>
-        public Collection<string> ErrorMessages { get; private set; }
+        public Collection<string> ErrorMessages { get; }
 
         private static IList<ParameterDescription> GetParameterDescriptions(ModelDescription modelDescription)
         {
-            ComplexTypeModelDescription complexTypeModelDescription = modelDescription as ComplexTypeModelDescription;
-            if (complexTypeModelDescription != null)
+            if (modelDescription is ComplexTypeModelDescription complexTypeModelDescription)
             {
                 return complexTypeModelDescription.Properties;
             }
 
-            CollectionModelDescription collectionModelDescription = modelDescription as CollectionModelDescription;
-            if (collectionModelDescription != null)
+            if (modelDescription is CollectionModelDescription collectionModelDescription)
             {
                 complexTypeModelDescription = collectionModelDescription.ElementDescription as ComplexTypeModelDescription;
                 if (complexTypeModelDescription != null)

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace KinectAPI
+namespace KinectPointingAPI
 {
     public class FilterConfig
     {

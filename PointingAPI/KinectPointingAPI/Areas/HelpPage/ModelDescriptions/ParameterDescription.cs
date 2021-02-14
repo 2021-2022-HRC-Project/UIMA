@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace KinectAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
 {
     public class ParameterDescription
     {
@@ -9,7 +9,7 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
             Annotations = new Collection<ParameterAnnotation>();
         }
 
-        public Collection<ParameterAnnotation> Annotations { get; private set; }
+        public Collection<ParameterAnnotation> Annotations { get; }
 
         public string Documentation { get; set; }
 

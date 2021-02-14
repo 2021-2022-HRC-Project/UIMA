@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace KinectAPI.Controllers
+namespace KinectPointingAPI.Controllers
 {
     public class HomeController : Controller
     {

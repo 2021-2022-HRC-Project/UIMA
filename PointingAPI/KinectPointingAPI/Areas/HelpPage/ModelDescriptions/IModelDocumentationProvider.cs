@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace KinectAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

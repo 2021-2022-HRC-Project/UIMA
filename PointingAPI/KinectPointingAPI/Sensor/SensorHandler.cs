@@ -1,4 +1,5 @@
 ﻿using Microsoft.Kinect;
+using System;
 using System.Threading;
 using System.Web;
 
@@ -6,24 +7,23 @@ namespace KinectPointingAPI.Sensor
 {
     public static class SensorHandler
     {
-        private static int CONNECT_TIMEOUT_MS = 20000;
+        private const int ConnectTimeoutMs = 20000;
 
         public static KinectSensor GetSensor()
         {
-            KinectSensor sensor = null;
             if (HttpContext.Current.Session["Sensor"] == null)
             {
-                sensor = KinectSensor.GetDefault();
+                KinectSensor sensor = KinectSensor.GetDefault();
                 sensor.Open();
 
-                int ms_slept = 0;
+                int msSlept = 0;
                 while (!sensor.IsAvailable)
                 {
                     Thread.Sleep(5);
-                    ms_slept += 5;
-                    if (ms_slept >= CONNECT_TIMEOUT_MS)
+                    msSlept += 5;
+                    if (msSlept >= ConnectTimeoutMs)
                     {
-                        System.Environment.Exit(-1);
+                        Environment.Exit(-1);
                     }
                 }
 

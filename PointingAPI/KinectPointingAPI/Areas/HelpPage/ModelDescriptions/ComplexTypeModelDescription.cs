@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace KinectAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {
@@ -9,6 +9,6 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
             Properties = new Collection<ParameterDescription>();
         }
 
-        public Collection<ParameterDescription> Properties { get; private set; }
+        public Collection<ParameterDescription> Properties { get; }
     }
 }

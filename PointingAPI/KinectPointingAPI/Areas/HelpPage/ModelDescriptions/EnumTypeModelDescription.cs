@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace KinectAPI.Areas.HelpPage.ModelDescriptions
+namespace KinectPointingAPI.Areas.HelpPage.ModelDescriptions
 {
     public class EnumTypeModelDescription : ModelDescription
     {
@@ -9,6 +9,6 @@ namespace KinectAPI.Areas.HelpPage.ModelDescriptions
             Values = new Collection<EnumValueDescription>();
         }
 
-        public Collection<EnumValueDescription> Values { get; private set; }
+        public Collection<EnumValueDescription> Values { get; }
     }
 }

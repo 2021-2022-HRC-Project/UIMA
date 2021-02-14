@@ -1,4 +1,4 @@
-﻿using HRC_Datatypes;
+﻿using KinectPointingAPI.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -20,8 +20,10 @@ namespace API_Testing
         [TestMethod]
         public void TestConvertToDict_UpdateSingleValue()
         {
-            BlockData testData = new BlockData(0, 0, 0, 0, 0, 0);
-            testData.centerX = 25;
+            BlockData testData = new BlockData(0, 0, 0, 0, 0, 0)
+            {
+                centerX = 25
+            };
 
             Dictionary<string, double> convertedDict = testData.ConvertToDict();
 
@@ -31,12 +33,14 @@ namespace API_Testing
         [TestMethod]
         public void TestConvertToDict_UpdateManyValues()
         {
-            BlockData testData = new BlockData(0, 0, 0, 0, 0, 0);
-            testData.cameraSpaceCenterX = 123;
-            testData.cameraSpaceCenterY = 531;
-            testData.cameraSpaceDepth = 3345;
-            testData.rHueVal = 256;
-            testData.bHueVal = 77;
+            BlockData testData = new BlockData(0, 0, 0, 0, 0, 0)
+            {
+                cameraSpaceCenterX = 123,
+                cameraSpaceCenterY = 531,
+                cameraSpaceDepth = 3345,
+                rHueVal = 256,
+                bHueVal = 77
+            };
 
             Dictionary<string, double> convertedDict = testData.ConvertToDict();
 

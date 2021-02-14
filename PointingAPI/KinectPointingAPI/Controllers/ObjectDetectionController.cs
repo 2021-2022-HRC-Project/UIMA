@@ -1,6 +1,6 @@
-﻿using HRC_Datatypes;
-using KinectPointingAPI.Image_Processing;
+﻿using KinectPointingAPI.Image_Processing;
 using KinectPointingAPI.Sensor;
+using KinectPointingAPI.Utilities;
 using Microsoft.Kinect;
 using Newtonsoft.Json.Linq;
 using System;
@@ -20,45 +20,45 @@ namespace KinectPointingAPI.Controllers
     [RoutePrefix("api/ObjectDetection")]
     public class ObjectDetectionController : AnnotationController<Dictionary<string, List<Dictionary<string, double>>>>
     {
-        private CoordinateMapper coordinateMapper;
-        private FrameDescription colorFrameDescription;
-        private BlockDetector blockDetector;
+        private CoordinateMapper _coordinateMapper;
+        private FrameDescription _colorFrameDescription;
+        private readonly BlockDetector _blockDetector;
 
-        private List<BlockData> aggregatedData;
-        private ColorFrame currColorFrame;
-        private DepthFrame currDepthFrame;
+        private List<BlockData> _aggregatedData;
+        private ColorFrame _currentColorFrame;
+        private DepthFrame _currentDepthFrame;
 
-        private static int TIMEOUT_MS = 30000;
-        private static string ANNOTATION_TYPE_CLASS = "edu.rosehulman.aixprize.pipeline.types.DetectedBlock";
+        private const int TimeoutMs = 30000;
+        private const string AnnotationTypeClass = "edu.rosehulman.aixprize.pipeline.types.DetectedBlock";
 
         public ObjectDetectionController()
         {
-            this.aggregatedData = new List<BlockData>();
-            this.blockDetector = new BlockDetector();
+            _aggregatedData = new List<BlockData>();
+            _blockDetector = new BlockDetector();
         }
 
-        public override void ProcessRequest(JToken casJSON)
+        public override void ProcessRequest(JToken casJson)
         {
             KinectSensor kinectSensor = SensorHandler.GetSensor();
-            this.coordinateMapper = kinectSensor.CoordinateMapper;
-            this.colorFrameDescription = kinectSensor.ColorFrameSource.FrameDescription;
+            _coordinateMapper = kinectSensor.CoordinateMapper;
+            _colorFrameDescription = kinectSensor.ColorFrameSource.FrameDescription;
 
-            int time_slept = 0;
+            int timeSlept = 0;
             while (!kinectSensor.IsAvailable)
             {
                 Thread.Sleep(5);
-                time_slept += 5;
-                if (time_slept > TIMEOUT_MS)
+                timeSlept += 5;
+                if (timeSlept > TimeoutMs)
                 {
-                    System.Environment.Exit(-2);
+                    Environment.Exit(-2);
                 }
             }
 
             bool dataReceived = false;
             while (!dataReceived)
             {
-                this.currColorFrame = SensorHandler.GetColorFrame();
-                if (this.currColorFrame != null)
+                _currentColorFrame = SensorHandler.GetColorFrame();
+                if (_currentColorFrame != null)
                 {
                     dataReceived = true;
                 }
@@ -67,49 +67,51 @@ namespace KinectPointingAPI.Controllers
             dataReceived = false;
             while (!dataReceived)
             {
-                this.currDepthFrame = SensorHandler.GetDepthFrame();
-                if (this.currDepthFrame != null)
+                _currentDepthFrame = SensorHandler.GetDepthFrame();
+                if (_currentDepthFrame != null)
                 {
                     dataReceived = true;
                 }
             }
 
-            this.aggregatedData = this.ProcessBlocksFromFrames();
-            this.currColorFrame = null;
-            this.currDepthFrame = null;
+            _aggregatedData = ProcessBlocksFromFrames();
+            _currentColorFrame = null;
+            _currentDepthFrame = null;
         }
 
         public override JsonResult<Dictionary<string, List<Dictionary<string, double>>>> GenerateAnnotationResponse()
         {
             List<Dictionary<string, double>> serializedBlocks = new List<Dictionary<string, double>>();
 
-            foreach (BlockData block in this.aggregatedData)
+            foreach (BlockData block in _aggregatedData)
             {
                 serializedBlocks.Add(block.ConvertToDict());
             }
 
-            Dictionary<String, List<Dictionary<string, double>>> annotation = new Dictionary<String, List<Dictionary<string, double>>>();
-            annotation.Add(ANNOTATION_TYPE_CLASS, serializedBlocks);
+            Dictionary<string, List<Dictionary<string, double>>> annotation = new Dictionary<string, List<Dictionary<string, double>>>
+            {
+                { AnnotationTypeClass, serializedBlocks }
+            };
             return Json(annotation);
         }
 
         private List<BlockData> ProcessBlocksFromFrames()
         {
-            Bitmap colorData = this.ConvertCurrFrameToBitmap();
-            List<BlockData> aggregatedData = this.blockDetector.DetectBlocks(colorData, this.colorFrameDescription.Width, this.colorFrameDescription.Height);
-            aggregatedData = this.ConvertCentersToCameraSpace(aggregatedData);
+            Bitmap colorData = ConvertCurrFrameToBitmap();
+            List<BlockData> aggregatedData = _blockDetector.DetectBlocks(colorData);
+            aggregatedData = ConvertCentersToCameraSpace(aggregatedData);
 
             return aggregatedData;
         }
 
         private Bitmap ConvertCurrFrameToBitmap()
         {
-            int width = this.colorFrameDescription.Width;
-            int height = this.colorFrameDescription.Height;
+            int width = _colorFrameDescription.Width;
+            int height = _colorFrameDescription.Height;
 
             WriteableBitmap pxData = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgr32, null);
             pxData.Lock();
-            this.currColorFrame.CopyConvertedFrameDataToIntPtr(
+            _currentColorFrame.CopyConvertedFrameDataToIntPtr(
                 pxData.BackBuffer,
                 (uint)(width * height * 4),
                 ColorImageFormat.Bgra);
@@ -120,46 +122,45 @@ namespace KinectPointingAPI.Controllers
             using (MemoryStream outStream = new MemoryStream())
             {
                 BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create((BitmapSource)pxData));
+                enc.Frames.Add(BitmapFrame.Create(pxData));
                 enc.Save(outStream);
-                bmp = new System.Drawing.Bitmap(outStream);
+                bmp = new Bitmap(outStream);
             }
             return bmp;
         }
 
         private List<BlockData> ConvertCentersToCameraSpace(List<BlockData> blocks)
         {
-            int depthWidth = this.currDepthFrame.FrameDescription.Width;
-            int depthHeight = this.currDepthFrame.FrameDescription.Height;
+            int depthWidth = _currentDepthFrame.FrameDescription.Width;
+            int depthHeight = _currentDepthFrame.FrameDescription.Height;
             ushort[] depths = new ushort[depthWidth * depthHeight];
-            this.currDepthFrame.CopyFrameDataToArray(depths);
+            _currentDepthFrame.CopyFrameDataToArray(depths);
 
-            int colorWidth = this.colorFrameDescription.Width;
-            int colorHeight = this.colorFrameDescription.Height;
+            int colorWidth = _colorFrameDescription.Width;
+            int colorHeight = _colorFrameDescription.Height;
             CameraSpacePoint[] cameraPoints = new CameraSpacePoint[colorWidth * colorHeight];
-            this.coordinateMapper.MapColorFrameToCameraSpace(depths, cameraPoints);
+            _coordinateMapper.MapColorFrameToCameraSpace(depths, cameraPoints);
 
-            foreach (BlockData block in blocks)
+            foreach (var block in blocks)
             {
-                Point center = new Point(block.centerX, block.centerY);
-                int viableIdx = -1;
-                Boolean foundViableIndex = false;
+                var center = new Point(block.centerX, block.centerY);
+                var viableIdx = -1;
+                var foundViableIndex = false;
 
                 // Find a nearby point for which the depth is actually defined, as depth resolution is smaller than color resolution -> not all color points have a depth
-                for (int i = -20; i < 20; i++)
+                for (var i = -20; i < 20; i++)
                 {
-                    for (int j = -20; j < 20; j++)
+                    for (var j = -20; j < 20; j++)
                     {
-                        int colorIdx = (center.Y + j) * colorWidth + (center.X + i);
+                        var colorIdx = (center.Y + j) * colorWidth + (center.X + i);
 
-                        if (colorIdx > 0 && colorIdx < cameraPoints.Length && cameraPoints[colorIdx].X != Double.NegativeInfinity
-                            && cameraPoints[colorIdx].Y != Double.NegativeInfinity && cameraPoints[colorIdx].Z != Double.NegativeInfinity)
-                        {
-
-                            viableIdx = colorIdx;
-                            foundViableIndex = true;
-                            break;
-                        }
+                        if (colorIdx <= 0 || colorIdx >= cameraPoints.Length ||
+                            double.IsNegativeInfinity(cameraPoints[colorIdx].X) ||
+                            double.IsNegativeInfinity(cameraPoints[colorIdx].Y) ||
+                            double.IsNegativeInfinity(cameraPoints[colorIdx].Z)) continue;
+                        viableIdx = colorIdx;
+                        foundViableIndex = true;
+                        break;
                     }
 
                     if (foundViableIndex)

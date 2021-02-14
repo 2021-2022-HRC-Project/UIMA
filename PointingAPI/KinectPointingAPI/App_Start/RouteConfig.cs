@@ -1,7 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using KinectPointingAPI.Controllers;
+using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace KinectAPI
+namespace KinectPointingAPI
 {
     public class RouteConfig
     {
@@ -13,7 +14,7 @@ namespace KinectAPI
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            ).RouteHandler = new SessionStateRouteHandler();
         }
     }
 }

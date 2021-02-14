@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
 
-namespace KinectAPI
+namespace KinectPointingAPI
 {
     public static class WebApiConfig
     {
@@ -10,7 +10,7 @@ namespace KinectAPI
             // Web API configuration and services
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(new CustomInheritanceRouteProvider());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -18,10 +18,11 @@ namespace KinectAPI
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("multipart/form-data"));
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
                  new MediaTypeHeaderValue("text/html"));
         }
     }
 }
+
