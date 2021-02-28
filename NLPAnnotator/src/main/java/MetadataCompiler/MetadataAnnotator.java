@@ -8,11 +8,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONString;
 
-import com.google.api.client.json.Json;
-
-import SpatialRelationGenerator.InnerBlock;
 import annotatorServer.Annotator;
 
 public class MetadataAnnotator extends Annotator{
@@ -47,7 +43,8 @@ public class MetadataAnnotator extends Annotator{
 		OutputBlock finalBlock = new OutputBlock(output,pathConfidence);
 		//Convert to JSON
 		MetadataAnnotationType annotation= new MetadataAnnotationType("\"edu.rosehulman.aixprize.pipeline.types.MetadataSelectedBlock\"", finalBlock);
-		
+
+		System.out.println("MetaData Output");
 		System.out.println("{" + annotation.getName() + ": "+ annotation.getFields() + "}");
 		return "{" + annotation.getName() + ": "+ annotation.getFields() + "}";
 	}
@@ -64,7 +61,6 @@ public class MetadataAnnotator extends Annotator{
 		this.degrees.add(1);
 		//--------------------- test input ---------------------
 		
-		System.out.println("Before NLP");
 		JSONArray NLPProcessor = null;
 		
 		try {

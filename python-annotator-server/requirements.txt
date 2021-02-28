@@ -1,0 +1,10 @@
+# PyAudio dep. for SpeechRecognition use
+#wheel
+#./third_party/PyAudio-0.2.11-cp37-cp37m-win_amd64.whl
+
+# Version-specific installs
+tornado==5.1.1
+google-api-python-client==1.7.7
+oauth2client==4.1.2
+SpeechRecognition==3.8.1
+numpy==1.16.1

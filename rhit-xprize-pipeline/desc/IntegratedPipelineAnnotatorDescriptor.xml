@@ -59,13 +59,13 @@
     <flowConstraints>
       <fixedFlow>
       	<node>MemoryLoadAnnotatorDescriptor</node>
-<!--        <node>BlockDetectionAnnotatorDescriptor</node>-->
-<!--        <node>PointingDataAnnotatorDescriptor</node>-->
-<!--        <node>SpatialRelationshipDescriptor</node>-->
+        <node>BlockDetectionAnnotatorDescriptor</node>
+        <node>PointingDataAnnotatorDescriptor</node>
+        <node>SpatialRelationshipDescriptor</node>
         <node>SpeechToTextJavaAnnotatorDescriptor</node>
         <node>NLPProcessorAnnotatorDescriptor</node>
-<!--        <node>ColorConfidenceAnnotatorDescriptor</node>-->
-<!--        <node>MetadataAnnotatorDescriptor</node>-->
+        <node>ColorConfidenceAnnotatorDescriptor</node>
+        <node>MetadataAnnotatorDescriptor</node>
 <!--        <node>AggregateConfidenceAnnotatorDescriptor</node>-->
 <!--        <node>OutputAnnotatorDescriptor</node>-->
 <!--        <node>CoordinateTransformationDescriptor</node>-->

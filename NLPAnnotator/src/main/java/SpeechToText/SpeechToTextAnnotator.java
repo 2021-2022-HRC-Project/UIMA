@@ -24,25 +24,11 @@ public class SpeechToTextAnnotator extends Annotator {
     private final String unitWrapper = "\"edu.rosehulman.aixprize.pipeline.types.SpokenText\":";
     private boolean terminationFlag = false;
 
-    //TODO: add a confirm button
-    private JButton confirm;
-//    public static void main(String[] args) {
-//        try {
-//            SpeechToTextAnnotator annotator = new SpeechToTextAnnotator();
-//            annotator.SetUpGUI();
-//            annotator.initializeActionListeners();
-////            streamingMicRecognize();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public SpeechToTextAnnotator(){
         super();
         try {
             this.SetUpGUI();
             this.initializeActionListeners();
-//            streamingMicRecognize();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,12 +36,7 @@ public class SpeechToTextAnnotator extends Annotator {
 
     @Override
     public String process(String request) {
-
-        // you can comment the following line out if you care what it says
-//        output = "Pick up the red block.";
-//        SpokenTextJava type = new SpokenTextJava(resultString);
-        String output = "{"+unitWrapper+"[{\"text\":[\""+resultString+"\"]}]"+"}";
-        System.out.println("Output Here: " + output + "************");
+        String output = "{"+unitWrapper+"[{\"text\":"+resultString+"}]"+"}";
         return output;
     }
 
@@ -215,7 +196,6 @@ public class SpeechToTextAnnotator extends Annotator {
         }
         responseObserver.onComplete();
         resultString = responseObserver.getResult();
-        System.out.println(resultString);
         response.setText(resultString);
     }
 
