@@ -78,12 +78,10 @@ public class MetadataAnnotator extends Annotator{
 		String output = NLPProcessor.getJSONObject(0).getString("output");
 		System.out.println("Output: " + output);
 
-		JSONArray object_Mods = new JSONObject(output).getJSONObject("info").getJSONArray("Object_Mods");
-
 		List<String> reverseOrderMods = new ArrayList<>();
 
 		// TODO: Need to find a way to get the direction string from the NLP Processor Output
-		String directionString = "";
+		String directionString = new JSONObject(output).getJSONObject("Target").getString("Direction");
 
 		System.out.println("directionString: " + directionString);
 

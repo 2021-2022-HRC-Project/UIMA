@@ -111,16 +111,13 @@ public class JSONResultWriter {
      * @return a JSON Object that containing all the parsed information
      */
     private static String getJSONString(ParseResultModel parseResult){
-        List<ParseResultModel> NLPResultList = new ArrayList<>();
-        NLPResultList.add(parseResult);
+        Map<String, ParseResultModel> output = new HashMap<>();
+        output.put("output", parseResult);
 
-        Map<String, List<ParseResultModel>> output = new HashMap<>();
-        output.put("output", NLPResultList);
-
-        List<Map<String, List<ParseResultModel>>> outputList = new ArrayList<>();
+        List<Map<String, ParseResultModel>> outputList = new ArrayList<>();
         outputList.add(output);
 
-        Map<String, List<Map<String, List<ParseResultModel>>>> finalOutput = new HashMap<>();
+        Map<String, List<Map<String, ParseResultModel>>> finalOutput = new HashMap<>();
 
         finalOutput.put(Utils.NLP_PROCESSOR_STRING, outputList);
 //        Gson gson = new GsonBuilder().setPrettyPrinting().create();
