@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,24 +15,24 @@ import org.json.JSONObject;
 import annotatorServer.Annotator;
 
 public class MetadataAnnotator extends Annotator{
-	
+
 	List<String> relationKeywords;
 	List<Integer> degrees;
 	MetaBlock startBlock;
-	
+
 	public MetadataAnnotator() {
 		super();
 		relationKeywords = new ArrayList<>();
 		degrees = new ArrayList<>();
 	}
-	
+
 
 	@Override
 	public String process(String request) {
 		parseJson(request);
-		
+
 		MetadataCompiler compiler = new MetadataCompiler();
-		
+
 		MetaBlock output = null;
 		try{
 			output = compiler.chooseBlock(relationKeywords, degrees, startBlock);
@@ -48,46 +51,53 @@ public class MetadataAnnotator extends Annotator{
 		System.out.println("{" + annotation.getName() + ": "+ annotation.getFields() + "}");
 		return "{" + annotation.getName() + ": "+ annotation.getFields() + "}";
 	}
-	
+
 	public void parseJson(String request){
 //----------Loop to create all blocks in a Map of id's to MetaBlocks
 		Map<Integer, MetaBlock> blocksFromJson = new HashMap<>();
-		
+
 		JSONObject jsonObj = new JSONObject(request);
-		
+
 //----------Find the relation keywords and degree
-			
+
 		//--------------------- test input ---------------------
 		this.degrees.add(1);
 		//--------------------- test input ---------------------
-		
+
 		JSONArray NLPProcessor = null;
-		
+
+
 		try {
 			NLPProcessor = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("NLPProcessor");
-		} 
+		}
 		catch(JSONException je) {
 			System.err.println(je);
 			return;
 		}
-		
+
 		String output = NLPProcessor.getJSONObject(0).getString("output");
 		System.out.println("Output: " + output);
-		
+
 		JSONArray object_Mods = new JSONObject(output).getJSONObject("info").getJSONArray("Object_Mods");
-		
+
 		List<String> reverseOrderMods = new ArrayList<>();
-		
-		for(int i = 0; i < object_Mods.length(); i++) {
-			JSONArray mods = object_Mods.getJSONObject(i).getJSONArray("Mods");
-			mods.forEach(mod -> {
-				String s = ((String) mod).toUpperCase();
-				if(s.equals("FRONT") || s.equals("LEFT") || s.equals("BEHIND") || s.equals("RIGHT")){
-					reverseOrderMods.add(s);
-				}
-			});
+
+		// TODO: Need to find a way to get the direction string from the NLP Processor Output
+		String directionString = "";
+
+		System.out.println("directionString: " + directionString);
+
+		String upperCaseDirectionString = directionString.toUpperCase();
+		switch (upperCaseDirectionString){
+			case "FRONT":
+			case "LEFT":
+			case "RIGHT":
+			case "BEHIND":
+				reverseOrderMods.add(upperCaseDirectionString);
+			case "IN_FRONT_OF":
+				reverseOrderMods.add("FRONT");
 		}
-		
+
 //		String[] arrayOfNouns = nounModifierPairs.split(",");
 //		
 //		
@@ -108,19 +118,19 @@ public class MetadataAnnotator extends Annotator{
 //			}
 //		
 //		}
-		
+
 		for(int i = reverseOrderMods.size() - 1; i >= 0; i--){
-			this.relationKeywords.add(reverseOrderMods.get(i));	
+			this.relationKeywords.add(reverseOrderMods.get(i));
 		}
-		
+
 		//_______________________TEMPORARY UNTIL NLP WORKING___________________
-		
+
 //		this.relationKeywords.add("LEFT");
-		
+
 		//_____________________________________________________________________
-		
+
 		JSONArray blockData = null;
-		
+
 		System.out.println("Before Blocks");
 		try {
 			blockData = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("SpatialRelationBlock");
@@ -129,41 +139,41 @@ public class MetadataAnnotator extends Annotator{
 			System.err.println(je);
 			return;
 		}
-		
+
 		if(blockData.length() < 1) {
 			System.err.println("No blocks detected:\n" + jsonObj);
 			return;
 		}
-		
+
 		for(int i = 0; i < blockData.length(); i++){
 			JSONObject block = blockData.getJSONObject(i);
-			
+
 			//create block from the jsondata (SpacialRelationAnnotation)
 			MetaBlock blockForMap = new MetaBlock(block.getInt("id"),
 					block.getDouble("x"),
 					block.getDouble("y"),
 					block.getDouble("z"),
 					block.getString("name"));
-			
+
 			blocksFromJson.put(blockForMap.id,blockForMap);
 		}
-		
+
 		System.out.println("Before Blocks relations");
 //----------Then Loop through JSON again, populate spatial relation lists of each block
 		for(int i = 1; i <= blockData.length(); i++){
 			JSONObject block = blockData.getJSONObject(i-1);
-			
+
 			String[] directions = {"left", "right", "behind", "front"};
-			
+
 			for(String dir : directions)
 			{
 				String leftList = block.getString(dir).trim();
 				leftList = leftList.substring(1,leftList.length()-1);
-				
+
 				leftList = leftList.replaceAll("\\(", "");
 				leftList = leftList.replaceAll("\\),", ")");
 				String[] arrOfStr = leftList.split("\\)");
-				
+
 				for(String s : arrOfStr)
 				{
 					if(!s.equals("")){
@@ -190,19 +200,19 @@ public class MetadataAnnotator extends Annotator{
 //----------Find the starting block
 		System.out.println("Before pointing");
 		JSONArray pointingData = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("Pointing");
-		
+
 		double maxConf = 0;
 		int originId = 1;
-		
+
 		for(int i = 0; i < pointingData.length(); i++){
 			JSONObject block = pointingData.getJSONObject(i);
-			
+
 			if(block.getDouble("confidence") > maxConf){
 				maxConf = block.getDouble("confidence");
 				originId = block.getInt("id");
 			}
 		}
-		
+
 		//-----select start block------
 		this.startBlock = blocksFromJson.get(originId);
 		System.out.println("Start Block: " + this.startBlock);

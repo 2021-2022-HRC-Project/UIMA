@@ -29,7 +29,7 @@ public class MetadataCompiler {
 		initialBlockQueue.add(new MetablockConfidenceTuple(startBlock,1));
 
 		
-		//index is the number of relation keywords gone through thusfar
+		//index is the number of relation keywords gone through thus far
 		int index = 0;
 		Queue<MetablockConfidenceTuple> returnedFinalList = recursivlySearchForBlock(initialBlockQueue,relationKeywords,degrees,index);
 		
