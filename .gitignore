@@ -5,6 +5,7 @@
 *.class
 
 python-annotator-server/venv/
+NLPAnnotator/JSONOutput/*.json
 
 .vs
 
