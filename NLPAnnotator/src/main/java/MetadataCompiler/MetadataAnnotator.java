@@ -1,10 +1,13 @@
 package MetadataCompiler;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import CoreNLP.Models.ParseResultModel;
+import Utils.NLPOutputParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,17 +75,13 @@ public class MetadataAnnotator extends Annotator{
 			return;
 		}
 
-		String output = NLPProcessor.getJSONObject(0).getString("output");
-		System.out.println("Output: " + output);
+		String output = NLPProcessor.getJSONObject(0).getString("output").replaceAll("\\[", "").replaceAll("]", "");
 
-		List<String> reverseOrderMods = new ArrayList<>();
-
-		// TODO: Need to find a way to get the direction string from the NLP Processor Output
-		String directionString = new JSONObject(output).getJSONObject("Target").getString("Direction");
-
+		String directionString = NLPOutputParser.findValueOf(output, "Direction");
 		System.out.println("directionString: " + directionString);
 
 		String upperCaseDirectionString = directionString.toUpperCase();
+		List<String> reverseOrderMods = new ArrayList<>();
 		switch (upperCaseDirectionString){
 			case "FRONT":
 			case "LEFT":
