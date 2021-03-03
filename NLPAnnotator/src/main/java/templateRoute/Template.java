@@ -1,4 +1,4 @@
-package annotatorServer;
+package templateRoute;
 
 public class Template {
 	public String output1 = "hello";

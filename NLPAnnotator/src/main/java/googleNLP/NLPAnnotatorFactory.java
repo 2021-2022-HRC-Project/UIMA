@@ -1,4 +1,4 @@
-package Factories;
+package googleNLP;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import Actions.NameAction;
 import Actions.PickUpAction;
 import Actions.PutDownAction;
 import Actions.VerbalAction;
-import annotatorServer.NLPAnnotatorUnit;
+import googleNLP.NLPAnnotatorUnit;
 import dataStructures.ConstructContainer;
 import dataStructures.SystemSavedConstructs;
 import googleNLP.GoogleNLPTokenAPIRequest;

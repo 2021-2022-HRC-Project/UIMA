@@ -109,7 +109,7 @@ public class SentenceParser {
                 case "to": // to the left/right of
                     directionString = sentenceMain.word();
                     if (ofWord!=null){
-                        refList.add(generateItemObj((IndexedWord) ofWord, dependencies, false));
+                        refList.add(generateItemObj(ofWord, dependencies, false));
                     }
                     break;
                 case "between":

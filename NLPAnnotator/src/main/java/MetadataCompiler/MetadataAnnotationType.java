@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import annotatorServer.AnnotationType;
+import dataStructures.AnnotationType;
 
 public class MetadataAnnotationType extends AnnotationType {
 	

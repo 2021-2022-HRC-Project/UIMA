@@ -1,10 +1,8 @@
 package SpeechToText;
 
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 //import annotatorServer.SpeechResponseListener;
-import annotatorServer.SpokenTextJava;
 import com.google.api.gax.rpc.ClientStream;
-import com.google.api.gax.rpc.ResponseObserver;
 import com.google.cloud.speech.v1.*;
 import com.google.protobuf.ByteString;
 import com.google.gson.Gson;
@@ -16,7 +14,6 @@ import java.awt.event.ActionListener;
 
 public class SpeechToTextAnnotator extends Annotator {
     private SpeechToTextResponseObserver responseObserver;
-    private Gson gson;
     private String resultString = "";
     private JTextArea response;
     private JButton record;
@@ -42,7 +39,6 @@ public class SpeechToTextAnnotator extends Annotator {
 
 
     private void SetUpGUI() {
-
         JFrame frame = new JFrame("Speech Recorded");
         frame.setDefaultCloseOperation(3);
         response = new JTextArea();
@@ -168,29 +164,6 @@ public class SpeechToTextAnnotator extends Annotator {
                                 .build();
                 clientStream.send(request);
             }
-//            record.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent evt) {
-//                    TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
-//                    targetDataLine.open(audioFormat);
-//                    targetDataLine.start();
-//                    System.out.println("Start speaking");
-//                    record.setEnabled(false);
-//                    stop.setEnabled(true);
-//                }
-//            });
-//            stop.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent arg0) {
-//                    System.out.println("Stop speaking.");
-//                    targetDataLine.stop();
-//                    targetDataLine.close();
-//                    request =
-//                            StreamingRecognizeRequest.newBuilder()
-//                                    .setAudioContent(ByteString.copyFrom(data))
-//                                    .build();
-//                    clientStream.send(request);
-//                    return;
-//                }
-//            });
         } catch (Exception e) {
             System.out.println(e);
         }

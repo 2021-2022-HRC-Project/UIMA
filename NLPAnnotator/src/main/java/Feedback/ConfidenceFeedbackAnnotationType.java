@@ -5,8 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import MetadataCompiler.OutputBlock;
-import annotatorServer.AnnotationType;
+import dataStructures.AnnotationType;
 
 public class ConfidenceFeedbackAnnotationType extends AnnotationType {
 

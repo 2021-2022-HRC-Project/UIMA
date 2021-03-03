@@ -1,14 +1,14 @@
-package annotatorServer;
+package googleNLP;
 
 import java.util.List;
+
+import dataStructures.Annotator;
 import org.json.JSONObject;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import Actions.VerbalAction;
 import actionArtifacts.UnknownArtifact;
 import dataStructures.SpokenPhrase;
-import googleNLP.NLPTokenParser;
 
 
 public class NLPAnnotatorUnit extends Annotator {

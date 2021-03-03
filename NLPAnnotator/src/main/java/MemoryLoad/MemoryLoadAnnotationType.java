@@ -1,7 +1,7 @@
 package MemoryLoad;
 
 import MemorySave.NamedBlock;
-import annotatorServer.AnnotationType;
+import dataStructures.AnnotationType;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

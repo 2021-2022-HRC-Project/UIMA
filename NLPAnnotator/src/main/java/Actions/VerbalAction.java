@@ -4,6 +4,6 @@ import actionArtifacts.CommandArtifact;
 import dataStructures.SpokenPhrase;
 
 public interface VerbalAction {
-	public boolean isAction(SpokenPhrase phrase);
-	public CommandArtifact parseImportant(SpokenPhrase phrase); 
+	boolean isAction(SpokenPhrase phrase);
+	CommandArtifact parseImportant(SpokenPhrase phrase);
 }

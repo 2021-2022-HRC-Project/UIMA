@@ -8,7 +8,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 import MetadataCompiler.MetaBlock;
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 
 public class SpatialRelationAnnotator extends Annotator{
 

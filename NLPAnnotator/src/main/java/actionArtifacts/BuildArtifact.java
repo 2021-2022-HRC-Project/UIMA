@@ -9,7 +9,7 @@ public class BuildArtifact implements CommandArtifact {
 	
 	private static final String COMMAND = "Build";
 	
-	private JSONObject commandArtifact;
+	private final JSONObject commandArtifact;
 	
 	public BuildArtifact(JSONObject object) {
 		commandArtifact = new JSONObject();

@@ -5,7 +5,8 @@ import MemoryLoad.MemoryLoadAnnotator;
 import MemorySave.MemorySaveAnnotator;
 import SpeechToText.*;
 
-import Factories.NLPAnnotatorFactory;
+import dataStructures.Annotator;
+import googleNLP.NLPAnnotatorFactory;
 import Feedback.ConfidenceFeedbackAnnotator;
 import MetadataCompiler.MetadataAnnotator;
 import SpatialRelationGenerator.SpatialRelationAnnotator;

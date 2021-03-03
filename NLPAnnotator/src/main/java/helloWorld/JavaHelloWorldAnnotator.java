@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 
 public class JavaHelloWorldAnnotator extends Annotator{
 

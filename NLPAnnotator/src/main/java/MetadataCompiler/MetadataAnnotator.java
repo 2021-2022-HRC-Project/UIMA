@@ -5,14 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 
 public class MetadataAnnotator extends Annotator{
 
@@ -95,27 +92,6 @@ public class MetadataAnnotator extends Annotator{
 			case "IN_FRONT_OF":
 				reverseOrderMods.add("FRONT");
 		}
-
-//		String[] arrayOfNouns = nounModifierPairs.split(",");
-//		
-//		
-//		List<String> reverseOrderMods = new ArrayList<>();
-//		for (int i = 0; i < arrayOfNouns.length; i++){
-//			String[] nounModifiers = arrayOfNouns[i].split(">");
-//			
-//			String noun = nounModifiers[0];		
-//			
-//			if(!nounModifiers[0].equals("") && !nounModifiers[1].equals("")){
-//				String[] modifiers = nounModifiers[1].split("\\|");
-//				for(int j = 0; j < modifiers.length; j++){
-//					String modifier = modifiers[j].toUpperCase();
-//					if(modifier.equals("FRONT") || modifier.equals("LEFT") || modifier.equals("BEHIND") || modifier.equals("RIGHT")){
-//						reverseOrderMods.add(modifier);
-//					}
-//				}
-//			}
-//		
-//		}
 
 		for(int i = reverseOrderMods.size() - 1; i >= 0; i--){
 			this.relationKeywords.add(reverseOrderMods.get(i));

@@ -1,10 +1,10 @@
-package annotatorServer;
+package dataStructures;
 
 import java.util.List;
 
 public abstract class AnnotationType{
 
-	private String name;
+	private final String name;
 	public AnnotationType(String name) {
 		this.name = name;
 	}

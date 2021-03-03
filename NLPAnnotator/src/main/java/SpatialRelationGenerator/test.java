@@ -10,10 +10,8 @@ public class test {
 	final static double MAX_DISTANCE = 1.50;
 	static double WIDTH_OF_WORKING_SPACE = 2;
 
-	public static void main(String args[]){
-//		InnerBlock current = new InnerBlock(1, -0.2783946692943573, -0.21063174307346344, 0.9890000224113464, "1");
-//		InnerBlock other = new InnerBlock(4, -0.9101457595825195, 0.21746917068958282, 1.7950000762939453, "4");
-		
+	public static void main(String[] args){
+
 		InnerBlock other = new InnerBlock(1, -0.2783946692943573, -0.21063174307346344, 0.9890000224113464, "1");
 		InnerBlock current = new InnerBlock(4, -0.9101457595825195, 0.21746917068958282, 1.7950000762939453, "4");
 		

@@ -1,6 +1,6 @@
 package MemorySave;
 
-import annotatorServer.AnnotationType;
+import dataStructures.AnnotationType;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

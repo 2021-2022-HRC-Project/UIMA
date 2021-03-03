@@ -10,8 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import annotatorServer.Annotator;
-
 public class Grapher {
 	
 	final double MAX_DISTANCE = 1.50;
@@ -97,11 +95,7 @@ public class Grapher {
 		
 		Vector3D vector = new Vector3D(other.x-current.x, other.y-current.y, other.z - current.z);
 		SphericalCoordinates po = new SphericalCoordinates(vector);
-		
-		
-//		//PolarCoordinates po = new PolarCoordinates(current.x, current.y, current.z, other.x, other.y, other.z);
-//		System.out.println("Current: " + current.name + " other: " + other.name+ "\n\tphi: " + po.getPhi() + " theta: " + po.getTheta());
-		
+
 		double distance = Math.abs(po.getR());
 		
 		double confidence = getConfidenceValue(distance);
@@ -116,30 +110,6 @@ public class Grapher {
 				relation.checkRelation(po, currentWrapper, otherWrapper, current, other);
 			}
 		}
-		
-//		else if (po.getTheta() < Math.PI/2) {
-//			if(po.getPhi() < Math.PI/4){
-//				current.front.add(otherWrapper);
-//				other.behind.add(currentWrapper);
-//			}else if (po.getPhi() <= (3.0*Math.PI)/4.0){
-//				current.right.add(otherWrapper);
-//				other.left.add(currentWrapper);
-//			}else{
-//				current.behind.add(otherWrapper);
-//				other.front.add(currentWrapper);
-//			}
-//		}else{
-//			if(po.getPhi() < Math.PI/4){
-//				current.behind.add(otherWrapper);
-//				other.front.add(currentWrapper);
-//			}else if (po.getPhi() <= (3.0*Math.PI)/4.0){
-//				current.left.add(otherWrapper);
-//				other.right.add(currentWrapper);
-//			}else{
-//				current.front.add(otherWrapper);
-//				other.behind.add(currentWrapper);
-//			}
-//		}
 	}
 	
 	public double getConfidenceValue(double distance) {

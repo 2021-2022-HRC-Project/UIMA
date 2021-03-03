@@ -6,5 +6,5 @@ import dataStructures.SpokenPhrase;
 
 public interface PhraseParser {
 
-	public boolean findInformation(SpokenPhrase phrase, JSONObject object);
+	boolean findInformation(SpokenPhrase phrase, JSONObject object);
 }

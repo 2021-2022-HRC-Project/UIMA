@@ -2,13 +2,11 @@ package MemoryLoad;
 
 import MemorySave.MemorySaveAnnotationType;
 import MemorySave.NamedBlock;
-import MetadataCompiler.MetaBlock;
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;

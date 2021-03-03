@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
-import annotatorServer.AnnotationType;
+import dataStructures.AnnotationType;
 
 public class SpatialRelationBlockType extends AnnotationType{
 

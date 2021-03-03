@@ -3,10 +3,7 @@ package Feedback;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import MetadataCompiler.MetaBlock;
-import MetadataCompiler.MetadataAnnotationType;
-import MetadataCompiler.OutputBlock;
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 
 public class ConfidenceFeedbackAnnotator extends Annotator {
 	
@@ -29,25 +26,14 @@ public class ConfidenceFeedbackAnnotator extends Annotator {
 
 	private void parseJson(String request) {
 		JSONObject jsonObj = new JSONObject(request);
-//		JSONArray jsonArray = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("MetadataSelectedBlock");
-//		
-//		JSONObject block = jsonArray.getJSONObject(0);
-		
-//		this.selectedBlock = new MetaBlock(block.getInt("id"),
-//				block.getDouble("x"),
-//				block.getDouble("y"),
-//				block.getDouble("z"),
-//				block.getString("name"));
-		
-//		this.confidenceValue = block.getDouble("confidenceValue");
-		
+
 		JSONArray jsonArray = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("AggregateConfidence");
 		JSONObject confidence = jsonArray.getJSONObject(0);
 		this.confidenceValue = confidence.getDouble("confidence");
 	}
 	
 	private String evaluateConfidence() {
-		if(this.confidenceValue >= this.CONFIDENCE_THRESHOLD) {
+		if(this.confidenceValue >= CONFIDENCE_THRESHOLD) {
 			return "True";
 		} else {
 			return "Is this the block you want?";

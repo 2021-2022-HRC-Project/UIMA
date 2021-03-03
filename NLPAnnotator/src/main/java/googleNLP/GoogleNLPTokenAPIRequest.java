@@ -18,7 +18,7 @@ import com.google.cloud.language.v1.Token;
 
 public class GoogleNLPTokenAPIRequest implements NLPTokenParser{
 
-	private LanguageServiceClient language;
+	private final LanguageServiceClient language;
 	
 	public GoogleNLPTokenAPIRequest() {
 		this.language = generateLanguage();

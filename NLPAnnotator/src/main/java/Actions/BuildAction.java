@@ -16,9 +16,9 @@ public class BuildAction implements VerbalAction {
 	private static final List<String> TRIGGER_WORD_LIST = Arrays.asList("build", "construct");
 	private static final String TRIGGER_PART_OF_SPEECH = "verb";
 
-	private PhraseParser buildWith;
-	private PhraseParser locationParser;
-	private PhraseParser buildTypeParser;
+	private final PhraseParser buildWith;
+	private final PhraseParser locationParser;
+	private final PhraseParser buildTypeParser;
 	
 	public BuildAction(PhraseParser buildWith, PhraseParser locationParser, PhraseParser buildTypeParser) {
 		this.buildWith = buildWith;

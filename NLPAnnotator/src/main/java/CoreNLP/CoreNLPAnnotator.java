@@ -1,6 +1,6 @@
 package CoreNLP;
 
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 import edu.stanford.nlp.pipeline.CoreSentence;
 import CoreNLP.Models.ParseResultModel;
 import CoreNLP.Workers.*;
@@ -11,10 +11,10 @@ import java.util.List;
 
 public class CoreNLPAnnotator extends Annotator {
     // TODO: We cannot parse obl:to relationship correctly now
-    private final static String warmUpText = "Pick up the blue block between this red block and the yellow block. ";
+    private final static String warmUpText = "Pick up the red block to the left of the blue block. ";
     private static Boolean firstTime = true;
-    private InputAnnotator inputAnnotator;
-    private SentenceParser sentenceParser;
+    private final InputAnnotator inputAnnotator;
+    private final SentenceParser sentenceParser;
     public CoreNLPAnnotator(){
         this.inputAnnotator = new InputAnnotator();
         this.sentenceParser = new SentenceParser();

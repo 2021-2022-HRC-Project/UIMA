@@ -16,8 +16,6 @@ public class FindBlockMods implements PhraseParser{
 	List<String> directions;
 	public FindBlockMods() {
 		directions = new ArrayList<>();
-//		directions.add("above");
-//		directions.add("below");
 		directions.add("left");
 		directions.add("right");
 		directions.add("front");

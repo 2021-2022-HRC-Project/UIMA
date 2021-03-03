@@ -1,18 +1,13 @@
 package SpatialRelationGenerator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
-import MetadataCompiler.MetaBlock;
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 
 public class SpatialRelationAnnotator extends Annotator{
 
@@ -64,36 +59,11 @@ public class SpatialRelationAnnotator extends Annotator{
 				.withName(""+block.getInt("id"))
 				.build();
 			
-//			InnerBlock innerBlock = new InnerBlock(block.getInt("id"),
-//					block.getDouble("camera_space_center_X"),
-//					block.getDouble("camera_space_center_Y"),
-//					block.getDouble("camera_space_depth"),
-//					""+block.getInt("id"));
-			
 			output.add(innerBlock);
 		}
-		
+
 		System.out.println("AFTER SPACIAL RELATION DATA");
-		//--------------------- test input ---------------------
-//		InnerBlock origin = new InnerBlock(0,0,0,1.5, "origin");
-//		output.add(origin);
-//		
-//		InnerBlock front = new InnerBlock(2,0.3,0,2.70, "front");
-//		output.add(front);
-//		
-//		InnerBlock left = new InnerBlock(4,-0.3,0,1.69, "left");
-//		output.add(left);
-//		
-//		InnerBlock right = new InnerBlock(3,0.5,0,1.40, "right");
-//		output.add(right);
-//		
-//		InnerBlock behind = new InnerBlock(1,0.20,0,1.10, "behind");
-//		output.add(behind);
-//		
-//		InnerBlock faraway = new InnerBlock(5,-1.00,0,1.25, "faraway");
-//		output.add(faraway);
-		//--------------------- test input ---------------------
-		
+
 		return output;
 	}
 	

@@ -10,7 +10,7 @@ import javax.speech.synthesis.Voice;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import annotatorServer.Annotator;
+import dataStructures.Annotator;
 
 public class TextToSpeechAnnotator extends Annotator{
 

@@ -1,6 +1,7 @@
-package annotatorServer;
+package templateRoute;
 
 import com.google.gson.Gson;
+import dataStructures.Annotator;
 
 public class TestRoute extends Annotator {
 

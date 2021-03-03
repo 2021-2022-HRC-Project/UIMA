@@ -12,7 +12,7 @@ import dataStructures.WordProperties;
 public class BuildTypeParser implements PhraseParser {
 	
 	
-	private ConstructContainer savedConstructs;
+	private final ConstructContainer savedConstructs;
 	
 	public BuildTypeParser(ConstructContainer savedConstructs) {
 		this.savedConstructs = savedConstructs;

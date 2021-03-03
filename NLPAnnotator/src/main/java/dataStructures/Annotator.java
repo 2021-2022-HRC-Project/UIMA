@@ -1,4 +1,4 @@
-package annotatorServer;
+package dataStructures;
 
 import java.io.IOException;
 import java.util.ArrayList;
