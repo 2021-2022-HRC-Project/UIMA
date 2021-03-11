@@ -312,7 +312,7 @@ public class SentenceParser {
                 naming += st + " ";
             }
             naming += partname.word();
-        } else if (sentenceString.contains("as")) { //TODO: cannot use obl:as relationship, use the last word
+        } else if (sentenceString.contains("as")) {
             String[] words = sentenceString.split(" ");
             IndexedWord lastChild = dependencies.getNodeByIndex(words.length);
             if(lastChild.tag().equals("NNP") || lastChild.tag().equals("NN")) {

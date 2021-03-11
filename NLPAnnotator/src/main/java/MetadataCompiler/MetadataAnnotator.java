@@ -38,7 +38,7 @@ public class MetadataAnnotator extends Annotator{
 			output = compiler.chooseBlock(relationKeywords, degrees, startBlock);
 		}
 		catch(Exception e) {
-			//TODO: Remove the following debug message when metadata annotator is working
+			// FIXME: Remove the following debug message when metadata annotator is working
 			System.err.println("Debug Message 0");
 
 			System.err.println(e);
@@ -74,7 +74,7 @@ public class MetadataAnnotator extends Annotator{
 			NLPProcessor = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("NLPProcessor");
 		}
 		catch(JSONException je) {
-			//TODO: Remove the following debug message when metadata annotator is working
+			// FIXME: Remove the following debug message when metadata annotator is working
 			System.err.println("Debug Message 1");
 
 			System.err.println(je);
@@ -115,9 +115,9 @@ public class MetadataAnnotator extends Annotator{
 			blockData = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("SpatialRelationBlock");
 		}
 		catch (JSONException je) {
-			//TODO: Remove the following debug message when metadata annotator is working
+			// FIXME: Remove the following debug message when metadata annotator is working
 			System.err.println("Debug Message 2");
-			
+
 			System.err.println(je);
 			return;
 		}

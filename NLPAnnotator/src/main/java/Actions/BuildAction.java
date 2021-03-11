@@ -39,7 +39,6 @@ public class BuildAction implements VerbalAction {
 
 	@Override
 	public CommandArtifact parseImportant(SpokenPhrase phrase) {
-		// TODO Auto-generated method stub
 		JSONObject object = new JSONObject();
 		buildTypeParser.findInformation(phrase, object);
 		buildWith.findInformation(phrase, object);

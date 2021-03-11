@@ -141,7 +141,6 @@ public class SpeechToTextAnnotator extends Annotator {
                 System.exit(0);
             }
             // Target data line captures the audio stream the microphone produces.
-            // TODO use gui to start
             TargetDataLine targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
             targetDataLine.open(audioFormat);
             targetDataLine.start();

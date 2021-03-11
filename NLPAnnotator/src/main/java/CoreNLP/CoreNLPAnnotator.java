@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class CoreNLPAnnotator extends Annotator {
-    // TODO: We cannot parse obl:to relationship correctly now
     private final static String warmUpText = "Pick up the red block to the left of the blue block. ";
     private static Boolean firstTime = true;
     private final InputAnnotator inputAnnotator;

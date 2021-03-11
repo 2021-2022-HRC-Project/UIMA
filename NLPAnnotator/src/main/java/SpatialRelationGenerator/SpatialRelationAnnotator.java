@@ -45,6 +45,8 @@ public class SpatialRelationAnnotator extends Annotator{
 		}
 		
 		System.out.println("SPACIAL RELATION DATA");
+
+		// FIXME: Some of codes below will cause the "out of range" message during execution
 		System.out.println(blockData);
 		
 		for(int i = 0; i < blockData.length(); i++){

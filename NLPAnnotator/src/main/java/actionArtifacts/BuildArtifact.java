@@ -18,13 +18,11 @@ public class BuildArtifact implements CommandArtifact {
 	
 	@Override
 	public Gson generateOutput() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getString() {
-		// TODO Auto-generated method stub
 		return commandArtifact.toString();
 	}
 

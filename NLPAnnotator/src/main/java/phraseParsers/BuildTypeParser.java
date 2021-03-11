@@ -20,8 +20,7 @@ public class BuildTypeParser implements PhraseParser {
 	
 	@Override
 	public boolean findInformation(SpokenPhrase phrase, JSONObject object) {
-		// TODO Auto-generated method stub
-		
+
 		for(int i = phrase.sentence.size() - 1; i >= 0; i--){
 			WordProperties word = phrase.sentence.get(i);
 			if(word.partOfSpeech.equalsIgnoreCase("Noun") && word.isSingular){
