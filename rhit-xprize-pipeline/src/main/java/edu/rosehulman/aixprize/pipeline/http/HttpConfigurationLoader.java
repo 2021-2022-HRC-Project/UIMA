@@ -7,7 +7,9 @@ import org.apache.commons.io.IOUtils;
 import org.json.*;
 
 public class HttpConfigurationLoader {
-	protected static final String CONFIG_FILE_NAME = "desc/servers.json";
+	public final static Boolean DEVELOPER_MODE = true;
+
+	protected static final String CONFIG_FILE_NAME = DEVELOPER_MODE ? "desc/developer.json" : "desc/servers.json";
 
 	public static class NoConfigurationFound extends Exception {
 		private static final long serialVersionUID = -7148498252286690391L;

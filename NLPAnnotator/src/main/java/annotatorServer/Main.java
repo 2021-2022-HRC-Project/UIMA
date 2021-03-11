@@ -1,46 +1,63 @@
 package annotatorServer;
-import static spark.Spark.*;
 
+import CoreNLP.CoreNLPAnnotator;
+import Feedback.ConfidenceFeedbackAnnotator;
 import MemoryLoad.MemoryLoadAnnotator;
 import MemorySave.MemorySaveAnnotator;
-import SpeechToText.*;
-
-import dataStructures.Annotator;
-import googleNLP.NLPAnnotatorFactory;
-import Feedback.ConfidenceFeedbackAnnotator;
 import MetadataCompiler.MetadataAnnotator;
 import SpatialRelationGenerator.SpatialRelationAnnotator;
+import SpeechToText.SpeechToTextAnnotator;
 import TextToSpeech.TextToSpeechAnnotator;
+import dataStructures.Annotator;
+import developerAnnotators.DeveloperObjectDetectionAnnotator;
+import developerAnnotators.DeveloperPointingAnnotator;
+import developerAnnotators.DeveloperSpeechToTextAnnotator;
 import helloWorld.JavaHelloWorldAnnotator;
-import CoreNLP.*;
+
+import static spark.Spark.port;
+import static spark.Spark.post;
 
 public class Main {
 
-	public static void main(String[] args) {
+    public final static Boolean DEVELOPER_MODE = true;
 
-		NLPAnnotatorFactory NLPFactory = new NLPAnnotatorFactory();
-		
-		port(3001);
-		
-		Annotator speech = new SpeechToTextAnnotator();
-		post("/Speech", speech);
-		Annotator metaData = new MetadataAnnotator();
-		post("/MetadataCompiler", metaData);
-		Annotator spatial = new SpatialRelationAnnotator();
-		post("/SpatialRelationGen", spatial);
-		Annotator handle = new CoreNLPAnnotator();
-		post("/NLPUnit", handle);
-		Annotator feedback = new ConfidenceFeedbackAnnotator();
-		post("/Feedback", feedback);
-		Annotator textToSpeech = new TextToSpeechAnnotator();
-		post("/TextToSpeech", textToSpeech);
-		
-		Annotator memorySave = new MemorySaveAnnotator();
-		post("/MemorySave", memorySave);
-		Annotator memoryLoad = new MemoryLoadAnnotator();
-		post("/MemoryLoad", memoryLoad);
-		
-		Annotator helloWorld = new JavaHelloWorldAnnotator();
-		post("/JavaHelloWorld", helloWorld);
-	}
+    public static void main(String[] args) {
+
+        port(3001);
+
+        Annotator speech = DEVELOPER_MODE ? new DeveloperSpeechToTextAnnotator() : new SpeechToTextAnnotator();
+        post("/Speech", speech);
+
+        Annotator metaData = new MetadataAnnotator();
+        post("/MetadataCompiler", metaData);
+
+        Annotator spatial = new SpatialRelationAnnotator();
+        post("/SpatialRelationGen", spatial);
+
+        Annotator handle = new CoreNLPAnnotator();
+        post("/NLPUnit", handle);
+
+        Annotator feedback = new ConfidenceFeedbackAnnotator();
+        post("/Feedback", feedback);
+
+        Annotator textToSpeech = new TextToSpeechAnnotator();
+        post("/TextToSpeech", textToSpeech);
+
+        Annotator memorySave = new MemorySaveAnnotator();
+        post("/MemorySave", memorySave);
+
+        Annotator memoryLoad = new MemoryLoadAnnotator();
+        post("/MemoryLoad", memoryLoad);
+
+        Annotator helloWorld = new JavaHelloWorldAnnotator();
+        post("/JavaHelloWorld", helloWorld);
+
+        if (DEVELOPER_MODE){
+			Annotator developerObjectDetection = new DeveloperObjectDetectionAnnotator();
+			post("/DeveloperObjectDetection", developerObjectDetection);
+
+			Annotator developerPointing = new DeveloperPointingAnnotator();
+			post("/DeveloperPointing", developerPointing);
+        }
+    }
 }

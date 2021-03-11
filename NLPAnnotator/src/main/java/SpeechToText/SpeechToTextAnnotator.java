@@ -33,6 +33,7 @@ public class SpeechToTextAnnotator extends Annotator {
 
     @Override
     public String process(String request) {
+        resultString = "Pick up the yellow block to the left of the blue block";
         String output = "{"+unitWrapper+"[{\"text\":"+resultString+"}]"+"}";
         return output;
     }
