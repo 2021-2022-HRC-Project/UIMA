@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import dataStructures.Annotator;
 
-public class MetadataAnnotator extends Annotator{
+public class MetadataAnnotator extends Annotator {
 
 	List<String> relationKeywords;
 	List<Integer> degrees;

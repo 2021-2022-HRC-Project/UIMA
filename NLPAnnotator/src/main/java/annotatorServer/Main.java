@@ -10,9 +10,11 @@ import SpeechToText.SpeechToTextAnnotator;
 import TextToSpeech.TextToSpeechAnnotator;
 import dataStructures.Annotator;
 import developerAnnotators.DeveloperObjectDetectionAnnotator;
+import developerAnnotators.DeveloperPlanningAnnotator;
 import developerAnnotators.DeveloperPointingAnnotator;
 import developerAnnotators.DeveloperSpeechToTextAnnotator;
 import helloWorld.JavaHelloWorldAnnotator;
+import planningUnit.PlanningAnnotator;
 
 import static spark.Spark.port;
 import static spark.Spark.post;
@@ -48,6 +50,9 @@ public class Main {
 
         Annotator memoryLoad = new MemoryLoadAnnotator();
         post("/MemoryLoad", memoryLoad);
+
+        Annotator planningUnit = DEVELOPER_MODE ? new DeveloperPlanningAnnotator() : new PlanningAnnotator();
+        post("/Planning", planningUnit);
 
         Annotator helloWorld = new JavaHelloWorldAnnotator();
         post("/JavaHelloWorld", helloWorld);
