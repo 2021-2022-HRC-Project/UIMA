@@ -9,10 +9,7 @@ import SpatialRelationGenerator.SpatialRelationAnnotator;
 import SpeechToText.SpeechToTextAnnotator;
 import TextToSpeech.TextToSpeechAnnotator;
 import dataStructures.Annotator;
-import developerAnnotators.DeveloperObjectDetectionAnnotator;
-import developerAnnotators.DeveloperPlanningAnnotator;
-import developerAnnotators.DeveloperPointingAnnotator;
-import developerAnnotators.DeveloperSpeechToTextAnnotator;
+import developerAnnotators.*;
 import helloWorld.JavaHelloWorldAnnotator;
 import planningUnit.PlanningAnnotator;
 
@@ -48,7 +45,7 @@ public class Main {
         Annotator memorySave = new MemorySaveAnnotator();
         post("/MemorySave", memorySave);
 
-        Annotator memoryLoad = new MemoryLoadAnnotator();
+        Annotator memoryLoad = DEVELOPER_MODE ? new DeveloperMemoryLoadAnnotator() : new MemoryLoadAnnotator();
         post("/MemoryLoad", memoryLoad);
 
         Annotator planningUnit = DEVELOPER_MODE ? new DeveloperPlanningAnnotator() : new PlanningAnnotator();
