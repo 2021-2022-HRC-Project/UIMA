@@ -68,7 +68,7 @@ public class MetadataAnnotator extends Annotator {
 		//--------------------- test input ---------------------
 
 		JSONArray NLPProcessor = null;
-
+//		System.out.println("||||||request: "+request);
 
 		try {
 			NLPProcessor = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("NLPProcessor");
@@ -80,11 +80,13 @@ public class MetadataAnnotator extends Annotator {
 			System.err.println(je);
 			return;
 		}
-
-		String output = NLPProcessor.getJSONObject(0).getString("output").replaceAll("\\[", "").replaceAll("]", "");
-
-		String directionString = NLPOutputParser.findValueOf(output, "Direction");
-		System.out.println("directionString: " + directionString);
+		//TODO: Change the Input
+		int seqNum = Integer.parseInt(NLPProcessor.getJSONObject(0).getString("seqNum"));
+		ParseResultModel model = NLPOutputParser.readJsonToModel(seqNum);
+//		String output = NLPProcessor.getJSONObject(0).getString("output").replaceAll("\\[", "").replaceAll("]", "");
+//		String directionString = NLPOutputParser.findValueOf(output, "Direction");
+		String command = model.getCommand();
+		String directionString = model.getTarget().getRelationModel().getDirection();
 
 		String upperCaseDirectionString = directionString.toUpperCase();
 		List<String> reverseOrderMods = new ArrayList<>();

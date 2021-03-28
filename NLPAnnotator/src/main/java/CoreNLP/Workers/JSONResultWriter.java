@@ -3,6 +3,7 @@ package CoreNLP.Workers;
 import CoreNLP.Models.ParseResultModel;
 import com.google.gson.Gson;
 import CoreNLP.utils.Utils;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -94,20 +95,28 @@ public class JSONResultWriter {
      * @param parseResult the ParseResultModel data class to be transformed and stored in JSON format
      * @return a JSON Object that containing all the parsed information
      */
+//    private static String getJSONString(ParseResultModel parseResult){
+//        Map<String, ParseResultModel> output = new HashMap<>();
+//        output.put("output", parseResult);
+//
+//        List<Map<String, ParseResultModel>> outputList = new ArrayList<>();
+//        outputList.add(output);
+//
+//        Map<String, List<Map<String, ParseResultModel>>> finalOutput = new HashMap<>();
+//
+//        finalOutput.put(Utils.NLP_PROCESSOR_STRING, outputList);
+//        Gson gson = new Gson();
+//        gson.toJson(finalOutput);
+//        return gson.toJson(finalOutput);
+//
+//    }
+
     private static String getJSONString(ParseResultModel parseResult){
-        Map<String, ParseResultModel> output = new HashMap<>();
-        output.put("output", parseResult);
-
-        List<Map<String, ParseResultModel>> outputList = new ArrayList<>();
-        outputList.add(output);
-
-        Map<String, List<Map<String, ParseResultModel>>> finalOutput = new HashMap<>();
-
-        finalOutput.put(Utils.NLP_PROCESSOR_STRING, outputList);
-        Gson gson = new Gson();
-        gson.toJson(finalOutput);
-        return gson.toJson(finalOutput);
+        Map<String, ParseResultModel> result = new HashMap<>();
+        result.put(Utils.NLP_PROCESSOR_STRING, parseResult);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson.toJson(result);
+        return gson.toJson(result);
 
     }
-
 }

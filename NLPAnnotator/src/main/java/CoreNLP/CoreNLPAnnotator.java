@@ -12,6 +12,7 @@ import java.util.List;
 public class CoreNLPAnnotator extends Annotator {
     private final static String warmUpText = "Pick up the red block to the left of the blue block. ";
     private static Boolean firstTime = true;
+    private final String unitWrapper = "\"edu.rosehulman.aixprize.pipeline.types.NLPProcessor\":";
     private final InputAnnotator inputAnnotator;
     private final SentenceParser sentenceParser;
     public CoreNLPAnnotator(){
@@ -31,9 +32,7 @@ public class CoreNLPAnnotator extends Annotator {
     @Override
     public String process(String request) throws IOException {
         JSONObject jsonObj = new JSONObject(request);
-
         String rawText = jsonObj.getJSONObject("_views").getJSONObject("_InitialView").getJSONArray("SpokenText").getJSONObject(0).getString("text").toLowerCase();
-        System.out.println(rawText);
         if (firstTime) {
             warmUp(inputAnnotator, sentenceParser);
             firstTime = false;
@@ -48,7 +47,7 @@ public class CoreNLPAnnotator extends Annotator {
             result = JSONResultWriter.writeResult(tempResult,seqNum);
             seqNum++;
         }
-
-        return result;
+        String output = "{"+unitWrapper+"[{\"seqNum\":"+(seqNum-1)+"}]"+"}";
+        return output;
     }
 }

@@ -17,6 +17,11 @@
           <supertypeName>uima.tcas.Annotation</supertypeName>
           <features>
             <featureDescription>
+              <name>seqNum</name>
+              <description/>
+              <rangeTypeName>uima.cas.String</rangeTypeName>
+            </featureDescription>
+            <featureDescription>
               <name>output</name>
               <description/>
               <rangeTypeName>uima.cas.String</rangeTypeName>
