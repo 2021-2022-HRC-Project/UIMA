@@ -20,7 +20,7 @@ def is_word_in_str(target, string, start=0):
 class ColorConfidenceAnnotator(Annotator):
     def initialize(self):
         super().initialize()
-        with open("./color_confidence/color_dictionary.json", encoding='utf-8') as f:
+        with open("./color_confidence/color_dictionary.json", encoding='utf-8') as f: # open the color_dictionary.json file
             self.color_dict = json.load(f)
         self.annotation_types.append(ColorConfidenceAnnotation.ANNOTATION_UIMA_TYPE_NAME)
 
@@ -37,26 +37,27 @@ class ColorConfidenceAnnotator(Annotator):
         if len(all_colors_in_text) == 0:
             print("Did not find color in spoken text, cannot determine confidence rating based on text.")
             return
-        
-        color_to_find = all_colors_in_text[0]
-        for block in blocks:
-            block_id = block['id']
-            red_hue = block['r_hue']
-            green_hue = block['g_hue']
-            blue_hue = block['b_hue']
 
+        # color_to_find = all_colors_in_text[0] # find the color key
+        for color in all_colors_in_text:
+            print("++++++++++++++++++++" + color)
+            for block in blocks: # for each block's rgb value
+                block_id = block['id']
+                red_hue = block['r_hue']
+                green_hue = block['g_hue']
+                blue_hue = block['b_hue']
 
-            block_rgb = [red_hue, green_hue, blue_hue]
-            # Scale rgb to put values in 0-255 range (adjusts for lighting)
-            max_hue_value = max(block_rgb)
-            scaled_rgb = [hue / max_hue_value * 255 for hue in block_rgb]
-        
-            analyzed_color_rgb = self.color_dict[color_to_find]
-            deltaValue = deltaE(scaled_rgb, analyzed_color_rgb)
-            confidence = 1 / deltaValue if deltaValue != 0 else 0
+                block_rgb = [red_hue, green_hue, blue_hue]
+                # Scale rgb to put values in 0-255 range (adjusts for lighting)
+                max_hue_value = max(block_rgb)
+                scaled_rgb = [hue / max_hue_value * 255 for hue in block_rgb]
+            
+                analyzed_color_rgb = self.color_dict[color]
+                deltaValue = deltaE(scaled_rgb, analyzed_color_rgb)
+                confidence = 1 / deltaValue if deltaValue != 0 else 0
 
-            annotation = ColorConfidenceAnnotation(block_id, confidence)
-            self.add_annotation(annotation)
+                annotation = ColorConfidenceAnnotation(block_id, confidence)
+                self.add_annotation(annotation)
     
     def rgb_dist(self, rgb1, rgb2):
         red_dist = (rgb1[0] - rgb2[0]) ** 2
