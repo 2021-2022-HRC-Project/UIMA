@@ -20,7 +20,8 @@ public class MetadataCompiler {
 		
 		return total;
 	}
-	
+
+	// FIXME: Look into this method, potential EmptyStackException!
 	public MetaBlock chooseBlock(List<String> relationKeywords, List<Integer> degrees, MetaBlock startBlock){
 		MetaBlock block = null;
 		

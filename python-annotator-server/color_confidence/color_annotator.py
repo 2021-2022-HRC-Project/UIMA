@@ -25,14 +25,25 @@ class ColorConfidenceAnnotator(Annotator):
         self.annotation_types.append(ColorConfidenceAnnotation.ANNOTATION_UIMA_TYPE_NAME)
 
     def process(self, cas):
+        seqNum = cas['_views']['_InitialView']['NLPProcessor'][0]['seqNum']
+        nlp_result = None
+        with open("../NLPAnnotator/JSONOutput/outputJson" + seqNum +".json", encoding='utf-8') as f: # open the NLPOutpu json file
+            nlp_result = json.load(f)
+
+        target_modifiers = nlp_result["edu.rosehulman.aixprize.pipeline.types.NLPProcessor"]["Target"]["mods"]
+
         sofa_string = cas['_views']['_InitialView']['SpokenText'][0]['text']
         blocks = cas['_views']['_InitialView']['DetectedBlock']
-       
-        to_analyze = sofa_string
+
+        print("target_modifiers: ", target_modifiers)
+
         all_colors_in_text = []
-        for word in self.color_dict.keys():
-            if is_word_in_str(word, to_analyze.lower()):
-                all_colors_in_text.append(word)
+        for target_modifier in target_modifiers:
+            if target_modifier.lower() in self.color_dict.keys():
+                all_colors_in_text.append(target_modifier.lower())
+
+        print("all_colors_in_text: ", all_colors_in_text)
+
 
         if len(all_colors_in_text) == 0:
             print("Did not find color in spoken text, cannot determine confidence rating based on text.")

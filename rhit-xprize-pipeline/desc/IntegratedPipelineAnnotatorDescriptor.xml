@@ -66,8 +66,8 @@
         <node>NLPProcessorAnnotatorDescriptor</node>
         <node>ColorConfidenceAnnotatorDescriptor</node>
         <node>MetadataAnnotatorDescriptor</node>
-<!--        <node>AggregateConfidenceAnnotatorDescriptor</node>-->
-<!--        <node>OutputAnnotatorDescriptor</node>-->
+        <node>AggregateConfidenceAnnotatorDescriptor</node>
+        <node>OutputAnnotatorDescriptor</node>
 <!--        <node>CoordinateTransformationDescriptor</node>-->
 <!--        <node>ConfidenceFeedbackAnnotatorDescriptor</node>-->
 <!--        <node>ActionAnnotatorDescriptor</node>-->
