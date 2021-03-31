@@ -1,0 +1,328 @@
+{
+    "_context": {
+        "_types": {
+            "ColorConfidence": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.ColorConfidence",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "DetectedBlock": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.DetectedBlock",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "DocumentAnnotation": {
+                "_id": "uima.tcas.DocumentAnnotation",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "MemoryLoad": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.MemoryLoad",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "NLPProcessor": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.NLPProcessor",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "Pointing": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.Pointing",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "Sofa": {
+                "_id": "uima.cas.Sofa",
+                "_feature_types": { "sofaArray": "_ref" }
+            },
+            "SpatialRelationBlock": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.SpatialRelationBlock",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "SpokenText": {
+                "_id": "edu.rosehulman.aixprize.pipeline.types.SpokenText",
+                "_feature_types": { "sofa": "_ref" }
+            },
+            "Annotation": {
+                "_id": "uima.tcas.Annotation",
+                "_feature_types": { "sofa": "_ref" },
+                "_subtypes": [
+                    "ColorConfidence",
+                    "DetectedBlock",
+                    "DocumentAnnotation",
+                    "MemoryLoad",
+                    "NLPProcessor",
+                    "Pointing",
+                    "SpatialRelationBlock",
+                    "SpokenText"
+                ]
+            },
+            "AnnotationBase": {
+                "_id": "uima.cas.AnnotationBase",
+                "_feature_types": { "sofa": "_ref" },
+                "_subtypes": ["Annotation"]
+            },
+            "TOP": {
+                "_id": "uima.cas.TOP",
+                "_subtypes": ["AnnotationBase", "Sofa"]
+            }
+        }
+    },
+    "_views": {
+        "_InitialView": {
+            "DocumentAnnotation": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 62,
+                    "language": "x-unspecified"
+                }
+            ],
+            "ColorConfidence": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 1.0,
+                    "confidence": 0.010364727830076251
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 2.0,
+                    "confidence": 0.012741831155720133
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 3.0,
+                    "confidence": 0.014813268712186774
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 4.0,
+                    "confidence": 0.01893964010956533
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 5.0,
+                    "confidence": 0.010397388605132325
+                }
+            ],
+            "DetectedBlock": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 1.0,
+                    "center_X": 754.0,
+                    "center_Y": 587.0,
+                    "camera_space_center_X": -0.2151883989572525,
+                    "camera_space_center_Y": -0.0091502470895648,
+                    "camera_space_depth": 0.7630000114440918,
+                    "r_hue": 109.0,
+                    "g_hue": 106.0,
+                    "b_hue": 76.0
+                    // Yellow Block
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 2.0,
+                    "center_X": 1544.0,
+                    "center_Y": 575.0,
+                    "camera_space_center_X": 0.3066319525241852,
+                    "camera_space_center_Y": -7.678611436858773e-4,
+                    "camera_space_depth": 0.6960000395774841,
+                    "r_hue": 91.0,
+                    "g_hue": 62.0,
+                    "b_hue": 95.0
+                    // Purple Block
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 3.0,
+                    "center_X": 1301.0,
+                    "center_Y": 574.0,
+                    "camera_space_center_X": 0.1538895219564438,
+                    "camera_space_center_Y": 0.0011505488073453307,
+                    "camera_space_depth": 0.7110000252723694,
+                    "r_hue": 138.0,
+                    "g_hue": 51.0,
+                    "b_hue": 51.0
+                    // Red Block
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 4.0,
+                    "center_X": 1054.0,
+                    "center_Y": 567.0,
+                    "camera_space_center_X": -0.008937851525843143,
+                    "camera_space_center_Y": 0.005005259532481432,
+                    "camera_space_depth": 0.7050000429153442,
+                    "r_hue": 20.0,
+                    "g_hue": 52.0,
+                    "b_hue": 127.0
+                    // Blue Block
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 5.0,
+                    "center_X": 964.0,
+                    "center_Y": 189.0,
+                    "camera_space_center_X": -0.08546193689107895,
+                    "camera_space_center_Y": 0.5728806257247925,
+                    "camera_space_depth": 1.6030000448226929,
+                    "r_hue": 133.0,
+                    "g_hue": 129.0,
+                    "b_hue": 95.0
+                }
+            ],
+            "MemoryLoad": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "namedBlocks": "[{\"name\":\"Bob\",\"x\":-0.01628926582634449,\"y\":-0.04363936185836792,\"z\":1.2850000858306885,\"id\":4},{\"name\":\"Mitchell\",\"x\":-0.4298781454563141,\"y\":-0.15041720867156982,\"z\":1.0380001068115234,\"id\":3},{\"name\":\"Joseph\",\"x\":-0.06132210046052933,\"y\":-0.1967618763446808,\"z\":1.0390000343322754,\"id\":1},{\"name\":\"Joseph\",\"x\":-0.065570168197155,\"y\":-0.1925860196352005,\"z\":1.0170000791549683,\"id\":1},{\"name\":\"Joseph\",\"x\":-0.08332977443933487,\"y\":-0.19800086319446564,\"z\":1.031000018119812,\"id\":1}]"
+                }
+            ],
+            "NLPProcessor": [
+                // TODO
+                { "sofa": 1, "begin": 0, "end": 0, "seqNum": "0", "targetColor": "blue" }
+            ],
+            "Pointing": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 1.0,
+                    "confidence": 0.7883012291917103
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 2.0,
+                    "confidence": 0.4192664971408399
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 3.0,
+                    "confidence": 0.7654227001515287
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 4.0,
+                    "confidence": 0.9984557463704878
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 5.0,
+                    "confidence": -0.8508741601239602
+                }
+            ],
+            "SpatialRelationBlock": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 1.0,
+                    "name": "1",
+                    "x": -0.2151883989572525,
+                    "y": -0.0091502470895648,
+                    "z": 0.7630000114440918,
+                    "left": "[]",
+                    "right": "[(4,0.9917174090806746), (2,0.9887250091797217), (3,0.9903120244424901)]",
+                    "front": "[(5,0.9814736249051731)]",
+                    "behind": "[]"
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 2.0,
+                    "name": "2",
+                    "x": 0.3066319525241852,
+                    "y": -7.678611436858773e-4,
+                    "z": 0.6960000395774841,
+                    "left": "[(3,0.9922054917133988), (1,0.9887250091797217), (4,0.9908449198531142)]",
+                    "right": "[]",
+                    "front": "[]",
+                    "behind": "[(5,0.9793147672742771)]"
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 3.0,
+                    "name": "3",
+                    "x": 0.1538895219564438,
+                    "y": 0.0011505488073453307,
+                    "z": 0.7110000252723694,
+                    "left": "[(4,0.9921317210489846), (1,0.9903120244424901)]",
+                    "right": "[(2,0.9922054917133988)]",
+                    "front": "[]",
+                    "behind": "[(5,0.9804263052499175)]"
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 4.0,
+                    "name": "4",
+                    "x": -0.008937851525843143,
+                    "y": 0.005005259532481432,
+                    "z": 0.7050000429153442,
+                    "left": "[(1,0.9917174090806746)]",
+                    "right": "[(3,0.9921317210489846), (2,0.9908449198531142)]",
+                    "front": "[]",
+                    "behind": "[(5,0.9808244437411645)]"
+                },
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "id": 5.0,
+                    "name": "5",
+                    "x": -0.08546193689107895,
+                    "y": 0.5728806257247925,
+                    "z": 1.6030000448226929,
+                    "left": "[]",
+                    "right": "[]",
+                    "front": "[(4,0.9808244437411645), (2,0.9793147672742771), (3,0.9804263052499175)]",
+                    "behind": "[(1,0.9814736249051731)]"
+                }
+            ],
+            "SpokenText": [
+                {
+                    "sofa": 1,
+                    "begin": 0,
+                    "end": 0,
+                    "text": "Pick up the blue block"
+                }
+            ]
+        }
+    },
+    "_referenced_fss": {
+        "1": {
+            "_type": "Sofa",
+            "sofaNum": 1,
+            "sofaID": "_InitialView",
+            "mimeType": "text",
+            "sofaString": "This is some document text. My face is blue and I am sad. red."
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "edu.rosehulman.aixprize.pipeline.types.MetadataSelectedBlock": [
+        {
+            "id": 4,
+            "name": "4",
+            "x": -0.008937851525843143,
+            "y": 0.005005259532481432,
+            "z": 0.7050000429153442,
+            "confidenceValue": 1.0,
+            "left": "[1]",
+            "right": "[3, 2]",
+            "front": "[]",
+            "behind": "[5]"
+        }
+    ]
+}
