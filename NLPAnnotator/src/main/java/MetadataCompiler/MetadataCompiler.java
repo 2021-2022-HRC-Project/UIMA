@@ -34,7 +34,7 @@ public class MetadataCompiler {
 		int index = 0;
 		Queue<MetablockConfidenceTuple> returnedFinalList = recursivlySearchForBlock(initialBlockQueue,relationKeywords,degrees,index);
 		
-		if(returnedFinalList == null){
+		if(returnedFinalList.isEmpty()){
 			//nothing found
 		}
 		else

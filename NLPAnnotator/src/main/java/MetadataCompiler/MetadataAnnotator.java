@@ -35,6 +35,7 @@ public class MetadataAnnotator extends Annotator {
 
 		MetaBlock output = null;
 		try{
+			System.out.println(relationKeywords.toString());
 			output = compiler.chooseBlock(relationKeywords, degrees, startBlock);
 		}
 		catch(Exception e) {
@@ -96,6 +97,7 @@ public class MetadataAnnotator extends Annotator {
 			case "RIGHT":
 			case "BEHIND":
 				reverseOrderMods.add(upperCaseDirectionString);
+				break;
 			case "IN_FRONT_OF":
 				reverseOrderMods.add("FRONT");
 		}

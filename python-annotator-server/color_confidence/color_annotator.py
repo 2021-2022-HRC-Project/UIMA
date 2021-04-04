@@ -1,6 +1,6 @@
 from base_annotator import Annotator, AnnotationType
 from color_confidence.rgb2lab import deltaE
-
+from DataModel import ParsedResult
 import json
 from tornado.ioloop import IOLoop
 from tornado.web import Application
@@ -25,24 +25,27 @@ class ColorConfidenceAnnotator(Annotator):
         self.annotation_types.append(ColorConfidenceAnnotation.ANNOTATION_UIMA_TYPE_NAME)
 
     def process(self, cas):
-        seqNum = cas['_views']['_InitialView']['NLPProcessor'][0]['seqNum']
-        nlp_result = None
-        with open("../NLPAnnotator/JSONOutput/outputJson" + seqNum +".json", encoding='utf-8') as f: # open the NLPOutpu json file
-            nlp_result = json.load(f)
+        seq_num = cas['_views']['_InitialView']['NLPProcessor'][0]['seqNum']
+        # with open("../NLPAnnotator/JSONOutput/outputJson" + seqNum +".json", encoding='utf-8') as f: # open the NLPOutpu json file
+        #     nlp_result = json.load(f)
+        # target_modifiers = nlp_result["edu.rosehulman.aixprize.pipeline.types.NLPProcessor"]["Target"]["mods"]
 
-        target_modifiers = nlp_result["edu.rosehulman.aixprize.pipeline.types.NLPProcessor"]["Target"]["mods"]
-
+        parsed_result = ParsedResult.ParsedResult(seq_num)
+        target_modifiers = parsed_result.target.mods
+        print(parsed_result.target.relationModel.objects[0].to_string())
         sofa_string = cas['_views']['_InitialView']['SpokenText'][0]['text']
         blocks = cas['_views']['_InitialView']['DetectedBlock']
 
         print("target_modifiers: ", target_modifiers)
-
+        # TODO: Extract item blocks and their color,
+        #  assign each color with highest confidence to block id from the spacial unit 4/4/2021
         all_colors_in_text = []
+        # find the color of the target block
         for target_modifier in target_modifiers:
             if target_modifier.lower() in self.color_dict.keys():
                 all_colors_in_text.append(target_modifier.lower())
-
         print("all_colors_in_text: ", all_colors_in_text)
+
 
 
         if len(all_colors_in_text) == 0:
@@ -50,6 +53,7 @@ class ColorConfidenceAnnotator(Annotator):
             return
 
         # color_to_find = all_colors_in_text[0] # find the color key
+        # TODO: understand the code below and modify the returned result 4/4/2021
         for color in all_colors_in_text:
             print("++++++++++++++++++++" + color)
             for block in blocks: # for each block's rgb value
@@ -65,11 +69,13 @@ class ColorConfidenceAnnotator(Annotator):
             
                 analyzed_color_rgb = self.color_dict[color]
                 deltaValue = deltaE(scaled_rgb, analyzed_color_rgb)
-                confidence = 1 / deltaValue if deltaValue != 0 else 0
+                confidence = 1 / deltaValue if deltaValue != 0 else float.inf
 
                 annotation = ColorConfidenceAnnotation(block_id, confidence)
                 self.add_annotation(annotation)
-    
+
+
+
     def rgb_dist(self, rgb1, rgb2):
         red_dist = (rgb1[0] - rgb2[0]) ** 2
         green_dist = (rgb1[1] - rgb2[1]) ** 2
