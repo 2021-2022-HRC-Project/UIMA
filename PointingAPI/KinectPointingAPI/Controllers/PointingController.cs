@@ -13,6 +13,10 @@ using System.Windows.Media.Media3D;
 
 namespace KinectPointingAPI.Controllers
 {
+    /// <summary>
+    /// This controller will setup the Pointing endpoint for the UIMA pipeline.
+    /// It will return the blocks id with corresponding confidence on whether the block is pointed at.
+    /// </summary>
     [RoutePrefix("api/Pointing")]
     public class PointingController : AnnotationController<Dictionary<string, List<Dictionary<string, double>>>>
     {

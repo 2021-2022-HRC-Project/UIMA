@@ -17,6 +17,10 @@ using Point = System.Drawing.Point;
 
 namespace KinectPointingAPI.Controllers
 {
+    /// <summary>
+    /// This is the endpoint for object detection using Kinect.
+    /// It will return the detected block with x,y,z coordination info, color information in RGB Hue, and assign ID to each block.
+    /// </summary>
     [RoutePrefix("api/ObjectDetection")]
     public class ObjectDetectionController : AnnotationController<Dictionary<string, List<Dictionary<string, double>>>>
     {

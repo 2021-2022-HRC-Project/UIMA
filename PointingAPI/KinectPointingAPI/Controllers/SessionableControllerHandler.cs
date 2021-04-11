@@ -5,6 +5,9 @@ using System.Web.SessionState;
 
 namespace KinectPointingAPI.Controllers
 {
+    /// <summary>
+    /// This controller is used to enable session storage, which is required by later units.
+    /// </summary>
     public class SessionableControllerHandler : HttpControllerHandler, IRequiresSessionState
     {
         public SessionableControllerHandler(RouteData routeData)
