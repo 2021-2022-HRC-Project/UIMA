@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-  <primitive>true</primitive>  <annotatorImplementationName>edu.rosehulman.aixprize.pipeline.annotators.ColorConfidenceAnnotator</annotatorImplementationName>
+  <primitive>true</primitive>  <annotatorImplementationName>edu.rosehulman.aixprize.pipeline.annotators.ColorAnnotator</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>ColorConfidenceAnnotatorDescriptor</name>
+    <name>ColorAnnotatorDescriptor</name>
     <description/>
     <version>1.0</version>
     <vendor/>
@@ -12,7 +12,7 @@
     <typeSystemDescription>
       <types>
         <typeDescription>
-          <name>edu.rosehulman.aixprize.pipeline.types.ColorConfidence</name>
+          <name>edu.rosehulman.aixprize.pipeline.types.Color</name>
           <description/>
           <supertypeName>uima.tcas.Annotation</supertypeName>
           <features>
@@ -22,9 +22,9 @@
               <rangeTypeName>uima.cas.Double</rangeTypeName>
             </featureDescription>
             <featureDescription>
-              <name>confidence</name>
+              <name>color</name>
               <description/>
-              <rangeTypeName>uima.cas.Double</rangeTypeName>
+              <rangeTypeName>uima.cas.String</rangeTypeName>
             </featureDescription>
           </features>
         </typeDescription>

@@ -18,7 +18,7 @@
     <delegateAnalysisEngine key="NLPProcessorAnnotatorDescriptor">
       <import location="./NLPProcessorAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="ColorConfidenceAnnotatorDescriptor">
+    <delegateAnalysisEngine key="ColorAnnotatorDescriptor">
       <import location="./ColorConfidenceAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="SpatialRelationshipDescriptor">
@@ -64,10 +64,10 @@
         <node>SpatialRelationshipDescriptor</node>
         <node>SpeechToTextJavaAnnotatorDescriptor</node>
         <node>NLPProcessorAnnotatorDescriptor</node>
-        <node>ColorConfidenceAnnotatorDescriptor</node>
-        <node>MetadataAnnotatorDescriptor</node>
+        <node>ColorAnnotatorDescriptor</node>
+        <!-- <node>MetadataAnnotatorDescriptor</node>
         <node>AggregateConfidenceAnnotatorDescriptor</node>
-        <node>OutputAnnotatorDescriptor</node>
+        <node>OutputAnnotatorDescriptor</node> -->
 <!--        <node>CoordinateTransformationDescriptor</node>-->
 <!--        <node>ConfidenceFeedbackAnnotatorDescriptor</node>-->
 <!--        <node>ActionAnnotatorDescriptor</node>-->

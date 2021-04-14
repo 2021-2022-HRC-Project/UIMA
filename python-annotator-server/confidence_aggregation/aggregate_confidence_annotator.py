@@ -3,7 +3,7 @@ from base_annotator import Annotator, AnnotationType
 
 class AggregateConfidenceAnnotator(Annotator):
     POINTING_CONFIDENCE_BOUNDS = [-1, 1]
-    COLOR_CONFIDENCE_BOUNDS = [0, 1]
+    # COLOR_CONFIDENCE_BOUNDS = [0, 1]
 
     def initialize(self):
         super().initialize()
@@ -12,16 +12,16 @@ class AggregateConfidenceAnnotator(Annotator):
     def process(self, cas):
         all_pointing_confidences = cas['_views']['_InitialView']['Pointing']
         
-        colorsUsed = False
-        try:
-            all_color_confidences = cas['_views']['_InitialView']['ColorConfidence']
+        # colorsUsed = False
+        # try:
+        #     all_color_confidences = cas['_views']['_InitialView']['ColorConfidence']
             
-            if len(all_pointing_confidences) != len(all_color_confidences):
-                print("Did not process the same number of blocks for each line of processing. Please try again!")
+        #     if len(all_pointing_confidences) != len(all_color_confidences):
+        #         print("Did not process the same number of blocks for each line of processing. Please try again!")
             
-            colorsUsed = True
-        except:
-            colorsUsed=False
+        #     colorsUsed = True
+        # except:
+        #     colorsUsed=False
         
 #------------------------         
 #         uses_actual_block_color = cas['_views']['_InitialView']['UsesActualBlockColor']
@@ -30,29 +30,28 @@ class AggregateConfidenceAnnotator(Annotator):
         
  
         pointing_confidences = dict()
-        color_confidences = dict()
+        # color_confidences = dict()
         for id in range(0, len(all_pointing_confidences)):
             block_id = all_pointing_confidences[id]['id']
             pointing_conf = all_pointing_confidences[id]['confidence']
             pointing_confidences[block_id] = pointing_conf
  
-            if(colorsUsed):
-                color_conf = all_color_confidences[id]['confidence']
-                color_confidences[block_id] = color_conf
-            else:
-                color_confidences[block_id] = 1
+            # if(colorsUsed):
+            #     color_conf = all_color_confidences[id]['confidence']
+            #     color_confidences[block_id] = color_conf
+            # else:
+            #     color_confidences[block_id] = 1
  
         normalized_pointing_confidences = self.normalize_data(pointing_confidences, self.POINTING_CONFIDENCE_BOUNDS)
         
-        
-        max = 0
-        min = 1
-        for blockid, value in color_confidences.items():
-            if(value > max):
-                max = value
-            if(value < min):
-                min = value
-        normalized_color_confidences = self.normalize_data(color_confidences, [min,max])
+        # max = 0
+        # min = 1
+        # for blockid, value in color_confidences.items():
+        #     if(value > max):
+        #         max = value
+        #     if(value < min):
+        #         min = value
+        # normalized_color_confidences = self.normalize_data(color_confidences, [min,max])
 # 
 #         for block_id in normalized_pointing_confidences:
 #             normalized_pointing_conf = normalized_pointing_confidences[block_id]
@@ -75,15 +74,17 @@ class AggregateConfidenceAnnotator(Annotator):
         print('POINTING CONFIDENCE:')
         print(normalized_pointing_confidence)
         
-        normalized_color_confidence = normalized_color_confidences[id]
-        print('COLOR CONFIDENCE:')
-        print(normalized_color_confidence)
+        # normalized_color_confidence = normalized_color_confidences[id]
+        # print('COLOR CONFIDENCE:')
+        # print(normalized_color_confidence)
         
-        totalConfidence = normalized_pointing_confidence * spatial_relationship_conf * normalized_color_confidence
+        # totalConfidence = normalized_pointing_confidence * spatial_relationship_conf * normalized_color_confidence
+        totalConfidence = normalized_pointing_confidence * spatial_relationship_conf
         print('TOTAL CONFIDENCE:')
         print(totalConfidence)
         
-        annotation = AggregateConfidenceAnnotation(id, totalConfidence, normalized_pointing_confidence, normalized_color_confidence, spatial_relationship_conf)
+        # annotation = AggregateConfidenceAnnotation(id, totalConfidence, normalized_pointing_confidence, normalized_color_confidence, spatial_relationship_conf)
+        annotation = AggregateConfidenceAnnotation(id, totalConfidence, normalized_pointing_confidence, spatial_relationship_conf)
         self.add_annotation(annotation)
 
     def normalize_data(self, data_to_normalize, data_bounds):
@@ -105,10 +106,11 @@ class AggregateConfidenceAnnotator(Annotator):
 class AggregateConfidenceAnnotation(AnnotationType):
     ANNOTATION_UIMA_TYPE_NAME = "edu.rosehulman.aixprize.pipeline.types.AggregateConfidence"
     
-    def __init__(self, id, confidence, normalized_pointing_conf, normalized_color_conf, spatial_relationship_conf):
+    # def __init__(self, id, confidence, normalized_pointing_conf, normalized_color_conf, spatial_relationship_conf):
+    def __init__(self, id, confidence, normalized_pointing_conf, spatial_relationship_conf):
         self.name = self.ANNOTATION_UIMA_TYPE_NAME
         self.id = id
         self.confidence = confidence
         self.normPointingConf = normalized_pointing_conf
-        self.normColorConf = normalized_color_conf
+        # self.normColorConf = normalized_color_conf
         self.spatialRelationshipConf = spatial_relationship_conf
