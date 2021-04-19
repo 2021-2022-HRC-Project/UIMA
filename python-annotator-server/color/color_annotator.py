@@ -1,6 +1,6 @@
 from base_annotator import Annotator, AnnotationType
 from color.rgb2lab import deltaE
-from DataModel import ParsedResult
+from DataModel import ParsedResult, SpatialRelationBlock
 import json
 from tornado.ioloop import IOLoop
 from tornado.web import Application
@@ -29,6 +29,20 @@ class ColorAnnotator(Annotator):
 
     def process(self, cas):
         seq_num = cas['_views']['_InitialView']['NLPProcessor'][0]['seqNum']
+        block_list_raw = cas['_views']['_InitialView']['SpatialRelationBlock']
+        block_list = []
+        for block in block_list_raw:
+            block_list.append(
+                SpatialRelationBlock.SpatialRelationBlock(block["id"],
+                                                          block["name"],
+                                                          block["x"],
+                                                          block["y"],
+                                                          block["z"],
+                                                          block["left"],
+                                                          block["right"],
+                                                          block["front"],
+                                                          block["behind"]))
+        print(block_list)
         # with open("../NLPAnnotator/JSONOutput/outputJson" + seqNum +".json", encoding='utf-8') as f: # open the NLPOutpu json file
         #     nlp_result = json.load(f)
         # target_modifiers = nlp_result["edu.rosehulman.aixprize.pipeline.types.NLPProcessor"]["Target"]["mods"]
