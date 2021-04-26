@@ -8,10 +8,7 @@ class SpatialRelationBlock:
     x: float
     y: float
     z: float
-    left: dict
-    right: dict
-    front: dict
-    behind: dict
+    spatial_dict: dict
 
     def convertStrToDict(self, relation: str) -> dict:
         # "[(2,0.991050002470602), (3,0.9894400957775169), (4,0.9816571955966872),
@@ -38,7 +35,7 @@ class SpatialRelationBlock:
         self.x = x
         self.y = y
         self.z = z
-        self.left = self.convertStrToDict(left)
-        self.right = self.convertStrToDict(right)
-        self.behind = self.convertStrToDict(behind)
-        self.front = self.convertStrToDict(front)
+        self.spatial_dict = {'left': self.convertStrToDict(left),
+                             'right': self.convertStrToDict(right),
+                             'behind': self.convertStrToDict(behind),
+                             'in_front_of': self.convertStrToDict(front)}

@@ -65,9 +65,9 @@
         <node>SpeechToTextJavaAnnotatorDescriptor</node>
         <node>NLPProcessorAnnotatorDescriptor</node>
         <node>ColorAnnotatorDescriptor</node>
-        <!-- <node>MetadataAnnotatorDescriptor</node>
+        <node>MetadataAnnotatorDescriptor</node>
         <node>AggregateConfidenceAnnotatorDescriptor</node>
-        <node>OutputAnnotatorDescriptor</node> -->
+        <node>OutputAnnotatorDescriptor</node>
 <!--        <node>CoordinateTransformationDescriptor</node>-->
 <!--        <node>ConfidenceFeedbackAnnotatorDescriptor</node>-->
 <!--        <node>ActionAnnotatorDescriptor</node>-->

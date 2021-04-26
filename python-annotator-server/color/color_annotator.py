@@ -2,12 +2,15 @@ from base_annotator import Annotator, AnnotationType
 from color.rgb2lab import deltaE
 from DataModel import ParsedResult, SpatialRelationBlock
 import json
-from tornado.ioloop import IOLoop
-from tornado.web import Application
+
+from dataclasses import dataclass
 
 
+@dataclass
 class ColorAnnotation(AnnotationType):
     ANNOTATION_UIMA_TYPE_NAME = "edu.rosehulman.aixprize.pipeline.types.Color"
+    id: float
+    color: str
 
     def __init__(self, id, color):
         self.name = self.ANNOTATION_UIMA_TYPE_NAME
@@ -30,9 +33,9 @@ class ColorAnnotator(Annotator):
     def process(self, cas):
         seq_num = cas['_views']['_InitialView']['NLPProcessor'][0]['seqNum']
         block_list_raw = cas['_views']['_InitialView']['SpatialRelationBlock']
-        block_list = []
+        block_list = {}
         for block in block_list_raw:
-            block_list.append(
+            block_list[block["id"]] = \
                 SpatialRelationBlock.SpatialRelationBlock(block["id"],
                                                           block["name"],
                                                           block["x"],
@@ -41,7 +44,7 @@ class ColorAnnotator(Annotator):
                                                           block["left"],
                                                           block["right"],
                                                           block["front"],
-                                                          block["behind"]))
+                                                          block["behind"])
         print(block_list)
         # with open("../NLPAnnotator/JSONOutput/outputJson" + seqNum +".json", encoding='utf-8') as f: # open the NLPOutpu json file
         #     nlp_result = json.load(f)
@@ -49,14 +52,13 @@ class ColorAnnotator(Annotator):
 
         parsed_result = ParsedResult.ParsedResult(seq_num)
         target_modifiers = parsed_result.target.mods
-        referenceObjects = parsed_result.target.relationModel.objects
+        reference_objects = parsed_result.target.relationModel.objects
         # print(parsed_result.target.relationModel.objects[0].to_string())
         sofa_string = cas['_views']['_InitialView']['SpokenText'][0]['text']
         blocks = cas['_views']['_InitialView']['DetectedBlock']
 
         print("target_modifiers: ", target_modifiers)
-        # TODO: Extract item blocks and their color,
-        #  assign each color with highest confidence to block id from the spacial unit 4/4/2021
+
         # all_colors_in_text = []
         target_color = None
         # find the color of the target block
@@ -64,27 +66,49 @@ class ColorAnnotator(Annotator):
             if target_modifier.lower() in self.color_dict.keys():
                 target_color = target_modifier.lower()
 
+        if target_color is not None:
+            # color_to_find = all_colors_in_text[0] # find the color key
+            print("++++++++++++++++++++" + target_color)
+            target_id = self.assign_color(blocks, target_color)
+            annotation = ColorAnnotation(target_id, target_color)  # assign the color to the block
+            print(annotation)
+            self.add_annotation(annotation)
+            return
         # FIXME: the current version does not support relational color assignment. The following code do extract the
         #  color modifiers of the reference objects, but further logic should be implemented.
-        reference_objects_color = None
-        if target_color is None:
+        else:
             reference_objects_color = []
-            for obj in referenceObjects:
-                for ref_mod in obj.mods:
+            for ref_obj in reference_objects:
+                for ref_mod in ref_obj.mods:
                     if ref_mod.lower() in self.color_dict.keys():
+                        ref_obj.color = ref_mod.lower()
+                        ref_obj.id = self.assign_color(blocks, ref_mod.lower())
                         reference_objects_color.append(ref_mod)
+            direction = parsed_result.target.relationModel.direction
 
-            print("all_colors_in_text: ", reference_objects_color)
+            if direction == "???" or not reference_objects_color:
+                # TODO: use pointing result or if check if there is only one object
+                raise NotImplementedError
+            if direction.lower() == "between":
+                # TODO two blocks
+                raise NotImplementedError
+            else:
+                ref_obj = reference_objects[0]
+                ref_id = ref_obj.id
+                ref_color = ref_obj.color
+                target_dict = block_list[ref_id].spatial_dict[direction]
+                target_id = max(target_dict, key=target_dict.get)
+                annotation = ColorAnnotation(target_id, "???")  # assign the color to the block
+                self.add_annotation(annotation)
+                print(annotation)
+                return
 
-        if reference_objects_color is None and target_color is None:
-            print("Did not find color in spoken text, cannot determine confidence rating based on text.")
-            return
+            print("all_colors_in_reference_object: ", reference_objects_color)
 
         # TODO: Add relational logic when the target color is not given. (eg. Pick up the block to the
         #  left of the yellow block)
 
-        # color_to_find = all_colors_in_text[0] # find the color key
-        print("++++++++++++++++++++" + target_color)
+    def assign_color(self, blocks, target_color):
         block_ids = []
         confidences = []
         for block in blocks:  # for each block's rgb value
@@ -118,8 +142,7 @@ class ColorAnnotator(Annotator):
 
         print("Block ID: " + str(block_ids[max_index]) + " Color: " + target_color)
         # annotation = ColorConfidenceAnnotation(block_id, confidence)
-        annotation = ColorAnnotation(block_ids[max_index], target_color)  # assign the color to the block
-        self.add_annotation(annotation)
+        return block_ids[max_index]
 
     def rgb_dist(self, rgb1, rgb2):
         red_dist = (rgb1[0] - rgb2[0]) ** 2

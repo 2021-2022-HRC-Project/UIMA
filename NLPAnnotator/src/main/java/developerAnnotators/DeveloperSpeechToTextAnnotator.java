@@ -7,7 +7,7 @@ import java.io.IOException;
 public class DeveloperSpeechToTextAnnotator extends Annotator {
 
     private final String unitWrapper = "\"edu.rosehulman.aixprize.pipeline.types.SpokenText\":";
-    private String resultString = "Pick up the blue block";
+    private String resultString = "Pick up the block to the right of the yellow block";
 //    private String resultString = "Pick up the blue block";
 
 

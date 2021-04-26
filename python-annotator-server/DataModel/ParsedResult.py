@@ -21,6 +21,8 @@ class ItemModel:
         self.mods = item_result["mods"]
         self.gesture = item_result["gesture"]
         self.belonging = item_result["belonging"]
+        self.id = -1
+        self.color = ""
 
     def to_string(self):
         str1 = " "
@@ -48,6 +50,9 @@ def get_items(objects):
 
 
 class RelationModel:
+    direction: str
+    objects: list
+
     def __init__(self, relation_model):
         self.direction = relation_model["Direction"]
         self.objects = get_items(relation_model["Objects"])

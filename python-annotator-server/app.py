@@ -10,10 +10,11 @@ from speech_to_text.speech_recognizer_software import GoogleCloudSpeechConverter
 from color.color_annotator import ColorAnnotator
 from confidence_aggregation.aggregate_confidence_annotator import AggregateConfidenceAnnotator
 from feedback.feedback_annotator import FeedbackAnnotator
-from CoordinateTransformation.transformation import CoordinateTransformationAnnotator 
+from CoordinateTransformation.transformation import CoordinateTransformationAnnotator
 from hello_world.helloWorld import PythonHelloWorldAnnotator
 
 define('port', default=3000, help='port to listen on')
+
 
 def main():
     """Construct and serve the tornado application."""
@@ -21,10 +22,10 @@ def main():
     speech_converter = GoogleCloudSpeechConverter()
 
     print("starting py server")
-    app = Application(handlers= [
+    app = Application(handlers=[
         ('/Speech', SpeechToTextAnnotator,
-            {"audio_source": audio_source,
-             "speech_processor": speech_converter}),
+         {"audio_source": audio_source,
+          "speech_processor": speech_converter}),
         ('/TextWithoutSpeech', DummyTextAnnotator),
         ('/Color', ColorAnnotator),
         ('/AggregateConfidence', AggregateConfidenceAnnotator),
@@ -35,6 +36,7 @@ def main():
     http_server = HTTPServer(app)
     http_server.listen(options.port)
     IOLoop.current().start()
+
 
 if __name__ == '__main__':
     main()
