@@ -27,7 +27,7 @@
   "edu.rosehulman.aixprize.pipeline.annotators.ColorAnnotator": {
     "address": "localhost",
     "port": 3000,
-    "path": "/Color"
+    "path": "/TargetExtraction"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.AggregateConfidenceAnnotator": {
     "address": "localhost",

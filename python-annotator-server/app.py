@@ -27,7 +27,7 @@ def main():
          {"audio_source": audio_source,
           "speech_processor": speech_converter}),
         ('/TextWithoutSpeech', DummyTextAnnotator),
-        ('/Color', TargetAnnotator),
+        ('/TargetExtraction', TargetAnnotator),
         ('/AggregateConfidence', AggregateConfidenceAnnotator),
         ('/Feedback', FeedbackAnnotator),
         ('/CoordTransformation', CoordinateTransformationAnnotator),
