@@ -4,4 +4,4 @@ __pycache__/
 .env/
 
 # exclude color_dictionary.json
-!./color/color_dictionary.json
+!target_extraction/color_dictionary.json

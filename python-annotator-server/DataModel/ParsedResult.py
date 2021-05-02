@@ -4,7 +4,7 @@ import json
 class ParsedResult:
 
     def __init__(self, seq_num):
-        with open("../NLPAnnotator/JSONOutput/outputJson" + seq_num + ".json",
+        with open("../JavaAnnotator/JSONOutput/outputJson" + seq_num + ".json",
                   encoding='utf-8') as f:  # open the NLPOutpu json file
             result = json.load(f)
         nlp_result = result["edu.rosehulman.aixprize.pipeline.types.NLPProcessor"]

@@ -1,5 +1,5 @@
 from base_annotator import Annotator, AnnotationType
-from color.rgb2lab import deltaE
+from target_extraction.rgb2lab import deltaE
 from DataModel import ParsedResult, SpatialRelationBlock
 import json
 
@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ColorAnnotation(AnnotationType):
+class TargetAnnotation(AnnotationType):
     ANNOTATION_UIMA_TYPE_NAME = "edu.rosehulman.aixprize.pipeline.types.Color"
     id: float
     color: str
@@ -23,12 +23,12 @@ def is_word_in_str(target, string, start=0):
     return idx >= 0
 
 
-class ColorAnnotator(Annotator):
+class TargetAnnotator(Annotator):
     def initialize(self):
         super().initialize()
-        with open("./color/color_dictionary.json", encoding='utf-8') as f:  # open the color_dictionary.json file
+        with open("./target_extraction/color_dictionary.json", encoding='utf-8') as f:  # open the color_dictionary.json file
             self.color_dict = json.load(f)
-        self.annotation_types.append(ColorAnnotation.ANNOTATION_UIMA_TYPE_NAME)
+        self.annotation_types.append(TargetAnnotation.ANNOTATION_UIMA_TYPE_NAME)
 
     def process(self, cas):
         seq_num = cas['_views']['_InitialView']['NLPProcessor'][0]['seqNum']
@@ -70,7 +70,7 @@ class ColorAnnotator(Annotator):
             # color_to_find = all_colors_in_text[0] # find the color key
             print("++++++++++++++++++++" + target_color)
             target_id = self.assign_color(blocks, target_color)
-            annotation = ColorAnnotation(target_id, target_color)  # assign the color to the block
+            annotation = TargetAnnotation(target_id, target_color)  # assign the color to the block
             print(annotation)
             self.add_annotation(annotation)
             return
@@ -91,14 +91,37 @@ class ColorAnnotator(Annotator):
                 raise NotImplementedError
             if direction.lower() == "between":
                 # TODO two blocks
-                raise NotImplementedError
+                ref_obj1 = reference_objects[0].id
+                ref_obj2 = reference_objects[1].id
+                target_obj1_left = block_list[ref_obj1].spatial_dict['left']
+                target_obj1_right = block_list[ref_obj1].spatial_dict['right']
+                target_obj2_left = block_list[ref_obj2].spatial_dict['left']
+                target_obj2_right = block_list[ref_obj2].spatial_dict['right']
+                intersect_list1 = self.check_intersect_target(target_obj1_left, target_obj2_right)
+                intersect_list2 = self.check_intersect_target(target_obj1_right, target_obj2_left)
+                if not intersect_list1 and not intersect_list2:
+                    annotation = TargetAnnotation(-1, "???")
+                    self.add_annotation(annotation)
+                    print(annotation)
+                    return
+                elif intersect_list1:
+                    annotation = TargetAnnotation(intersect_list1, "???")
+                    self.add_annotation(annotation)
+                    print(annotation)
+                    return
+                elif intersect_list2:
+                    annotation = TargetAnnotation(intersect_list2, "???")
+                    self.add_annotation(annotation)
+                    print(annotation)
+                    return
+
             else:
                 ref_obj = reference_objects[0]
                 ref_id = ref_obj.id
                 ref_color = ref_obj.color
                 target_dict = block_list[ref_id].spatial_dict[direction]
                 target_id = max(target_dict, key=target_dict.get)
-                annotation = ColorAnnotation(target_id, "???")  # assign the color to the block
+                annotation = TargetAnnotation(target_id, "???")  # assign the color to the block
                 self.add_annotation(annotation)
                 print(annotation)
                 return
@@ -107,6 +130,16 @@ class ColorAnnotator(Annotator):
 
         # TODO: Add relational logic when the target color is not given. (eg. Pick up the block to the
         #  left of the yellow block)
+
+    def check_intersect_target(self, obj1, obj2):
+        inter_list = set(obj1.keys()) & set(obj2.keys());
+        if not inter_list:
+            return False
+        else:
+            inter_dict = {}
+            for key in inter_list:
+                inter_dict[key] = (obj1[key] + obj2[key]) / 2
+            return max(inter_dict, key=inter_dict.get)
 
     def assign_color(self, blocks, target_color):
         block_ids = []
@@ -135,7 +168,7 @@ class ColorAnnotator(Annotator):
         max_index = 0  # the current max confidence block id
         max_i = 0
         for confi in confidences:
-            if (confi > max_i):
+            if confi > max_i:
                 max_i = confi
                 max_index = index
             index = index + 1
@@ -143,6 +176,9 @@ class ColorAnnotator(Annotator):
         print("Block ID: " + str(block_ids[max_index]) + " Color: " + target_color)
         # annotation = ColorConfidenceAnnotation(block_id, confidence)
         return block_ids[max_index]
+
+    # TODO: find a better way to distinguish the blue block and the purple block. Currently,
+    #  there is a problem that when finding purple block, the blue block is detected and assigned id
 
     def rgb_dist(self, rgb1, rgb2):
         red_dist = (rgb1[0] - rgb2[0]) ** 2
