@@ -22,7 +22,7 @@ public class Controller {
 		//IntegratedPipelineAnnotatorDescriptor
 		//BlockDetectionAnnotatorDescriptor
 		//HelloWorld
-		File compoundAnnotatorDescriptor = new File("desc/IntegratedPipelineAnnotatorDescriptor.xml");
+		File compoundAnnotatorDescriptor = new File("rhit-xprize-pipeline/desc/IntegratedPipelineAnnotatorDescriptor.xml");
 		if (!compoundAnnotatorDescriptor.exists()) {
 			log.fatal("Couldn't find descriptor at " + compoundAnnotatorDescriptor.getAbsolutePath());
 		}
@@ -30,7 +30,7 @@ public class Controller {
 			XMLInputSource xmlInput = new XMLInputSource(compoundAnnotatorDescriptor);
 			ResourceSpecifier specifier = UIMAFramework.getXMLParser().parseResourceSpecifier(xmlInput);
 
-			Thread.sleep(10000);
+			Thread.sleep(10000); // Does this do anything?
 			AnalysisEngine analysisEngine = UIMAFramework.produceAnalysisEngine(specifier);
 			JCas cas = analysisEngine.newJCas();
 
@@ -40,15 +40,15 @@ public class Controller {
 			index.forEach(annotation -> log.info("Found annotation: " + annotation));
 			
 			cas.reset();
+			log.info("CAS Reset, my job here is done.");
 		} catch (IOException e) {
-			log.fatal("Failed to load descriptor.");
+			log.fatal("Failed to load descriptor.", e);
 		} catch (InvalidXMLException e) {
-			log.fatal("Invalid XML.");
+			log.fatal("Invalid XML.", e);
 		} catch (ResourceInitializationException e) {
-			e.printStackTrace();
-			log.fatal("Failed to initialize the analysis engine.");
+			log.fatal("Failed to initialize the analysis engine.", e);
 		} catch (AnalysisEngineProcessException e) {
-			log.fatal("Failed to process the analysis.");
+			log.fatal("Failed to process the analysis.", e);
 		}
 	}
 }
