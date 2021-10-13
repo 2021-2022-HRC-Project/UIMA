@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+version = '1.0-SNAPSHOT'
+description = 'rhit-xprize-pipeline'
+
+dependencies {
+    implementation 'org.apache.uima:uimaj-core:2.10.1'
+    implementation 'org.apache.uima:uimaj-json:2.10.1'
+    implementation 'org.json:json:20170516'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.5'
+    implementation 'org.apache.httpcomponents:httpmime:4.5.3'
+    implementation 'commons-io:commons-io:1.4'
+}
+
+application {
+    mainClass = 'edu.rosehulman.aixprize.pipeline.core.Controller'
+}
