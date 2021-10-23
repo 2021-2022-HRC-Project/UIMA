@@ -68,10 +68,10 @@
         <node>MetadataAnnotatorDescriptor</node>
         <node>AggregateConfidenceAnnotatorDescriptor</node>
         <node>OutputAnnotatorDescriptor</node>
-<!--        <node>CoordinateTransformationDescriptor</node>-->
-<!--        <node>ConfidenceFeedbackAnnotatorDescriptor</node>-->
+        <node>CoordinateTransformationDescriptor</node>
+        <node>ConfidenceFeedbackAnnotatorDescriptor</node>
 <!--        <node>ActionAnnotatorDescriptor</node>-->
-<!--        <node>TextToSpeechAnnotatorDescriptor</node>-->
+        <node>TextToSpeechAnnotatorDescriptor</node>
 <!--        <node>MemorySaveAnnotatorDescriptor</node>-->
       </fixedFlow>
     </flowConstraints>

@@ -78,23 +78,26 @@ public abstract class HttpAnnotator extends JCasAnnotator_ImplBase {
 	}
 
 	private void receiveAnnotations(JCas cas, HttpResponse resp) throws IOException {
-		InputStream stream = resp.getEntity().getContent();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		JSONObject annotationJson;
-
-		annotationJson = new JSONObject(reader.readLine());
-		for (String annotationName : JSONObject.getNames(annotationJson)) {
-			JSONArray jsonAnnotations = annotationJson.getJSONArray(annotationName);
-			List<Annotation> annotations = new ArrayList<>();
-			for (int i = 0; i < jsonAnnotations.length(); i++) {
-				try {
-					annotations.add(this.createAnnotation(cas, annotationName, jsonAnnotations.getJSONObject(i)));
-				} catch (Exception e) {
-					LOG.error("Failed to create annotation (or segment) from JSON", e);
+		final InputStream contentStream = resp.getEntity().getContent();
+		try (final BufferedReader reader = new BufferedReader(new InputStreamReader(contentStream))) {
+			final String annotationText = reader.readLine();
+			LOG.info("Receiving annotation:\n" + annotationText);
+			final JSONObject annotationJson = new JSONObject(annotationText);
+			for (String annotationName : JSONObject.getNames(annotationJson)) {
+				JSONArray jsonAnnotations = annotationJson.getJSONArray(annotationName);
+				List<Annotation> annotations = new ArrayList<>();
+				for (int i = 0; i < jsonAnnotations.length(); i++) {
+					try {
+						annotations.add(this.createAnnotation(cas, annotationName, jsonAnnotations.getJSONObject(i)));
+					} catch (JSONException e) {
+						LOG.error("Failed to create annotation (or segment) from JSON - Malformed JSON Object:\n"
+								+ jsonAnnotations.getString(i), e);
+					} catch (Exception e) {
+						LOG.error("Failed to create annotation (or segment) from JSON", e);
+					}
 				}
+				annotations.forEach(Annotation::addToIndexes);
 			}
-
-			annotations.forEach(Annotation::addToIndexes);
 		}
 	}
 
