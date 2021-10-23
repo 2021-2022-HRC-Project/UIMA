@@ -22,7 +22,7 @@ public class Controller {
 		//IntegratedPipelineAnnotatorDescriptor
 		//BlockDetectionAnnotatorDescriptor
 		//HelloWorld
-		File compoundAnnotatorDescriptor = new File("rhit-xprize-pipeline/desc/IntegratedPipelineAnnotatorDescriptor.xml");
+		File compoundAnnotatorDescriptor = new File("desc/IntegratedPipelineAnnotatorDescriptor.xml");
 		if (!compoundAnnotatorDescriptor.exists()) {
 			log.fatal("Couldn't find descriptor at " + compoundAnnotatorDescriptor.getAbsolutePath());
 		}

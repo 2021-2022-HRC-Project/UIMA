@@ -26,6 +26,9 @@ dependencies {
 
 application {
     mainClass = 'annotatorServer.Main'
+    run {
+        workingDir = projectDir
+    }
 }
 
 
