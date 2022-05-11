@@ -1,66 +1,66 @@
 {
   "edu.rosehulman.aixprize.pipeline.annotators.MemoryLoadAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/MemoryLoad"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.PointingAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/DeveloperPointing"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.BlockDetectionAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/DeveloperObjectDetection"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.OutputAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 56814,
     "path": "/api/Output"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.SpeechToTextAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3000,
     "path": "/TextWithoutSpeech"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.ColorAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3000,
     "path": "/TargetExtraction"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.AggregateConfidenceAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3000,
     "path": "/AggregateConfidence"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.ConfidenceFeedbackAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/Feedback"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.SpeechToTextJavaAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/Speech"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.NLPProcessorAnnotator":{
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/NLPUnit"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.SpatialRelationAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/SpatialRelationGen"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.MetadataAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/MetadataCompiler"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.CoordinateTransformationAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3000,
     "path": "/CoordTransformation"
   },
@@ -70,22 +70,22 @@
     "path": "/action"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.TextToSpeechAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/TextToSpeech"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.MemorySaveAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/MemorySave"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.PythonHelloWorldAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3000,
     "path": "/PythonHelloWorld"
   },
   "edu.rosehulman.aixprize.pipeline.annotators.JavaHelloWorldAnnotator": {
-    "address": "localhost",
+    "address": "127.0.0.1",
     "port": 3001,
     "path": "/JavaHelloWorld"
   }

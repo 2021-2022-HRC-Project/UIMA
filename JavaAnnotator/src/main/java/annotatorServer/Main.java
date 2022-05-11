@@ -27,6 +27,8 @@ public class Main {
         Annotator speech = DEVELOPER_MODE ? new DeveloperSpeechToTextAnnotator() : new SpeechToTextAnnotator();
         post("/Speech", speech);
 
+        //ADD NEW TRUST ANNOTATOR
+
         Annotator metaData = new MetadataAnnotator();
         post("/MetadataCompiler", metaData);
 
@@ -39,8 +41,8 @@ public class Main {
         Annotator feedback = new ConfidenceFeedbackAnnotator();
         post("/Feedback", feedback);
 
-        Annotator textToSpeech = new TextToSpeechAnnotator();
-        post("/TextToSpeech", textToSpeech);
+//        Annotator textToSpeech = new TextToSpeechAnnotator();
+//        post("/TextToSpeech", textToSpeech);
 
         Annotator memorySave = new MemorySaveAnnotator();
         post("/MemorySave", memorySave);
