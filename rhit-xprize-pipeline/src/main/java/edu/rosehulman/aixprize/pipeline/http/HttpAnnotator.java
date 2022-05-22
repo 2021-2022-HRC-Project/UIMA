@@ -80,7 +80,7 @@ public abstract class HttpAnnotator extends JCasAnnotator_ImplBase {
 		// LOOK HERE FOR ERROR!!! 4/26/2022 SEE WHAT JSON OBJECT IS BEING PASSED AND BY WHOM
 		// SOLVED 5/2/2022 - NO ERRORS
 		String tempString = reader.readLine();
-		// System.out.println("I AM HERE BRO\n"+tempString);
+		System.out.println("I AM HERE\n"+tempString);
 		annotationJson = new JSONObject(tempString);
 		for (String annotationName : JSONObject.getNames(annotationJson)) {
 			JSONArray jsonAnnotations = annotationJson.getJSONArray(annotationName);
