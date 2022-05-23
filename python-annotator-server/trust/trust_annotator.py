@@ -1,17 +1,17 @@
+from numpy import diff
 import nltk
 import json
 from nltk.stem import WordNetLemmatizer 
 
 sentence = CAS.task
 jsonObjs = CAS.commandItems
+importance = CAS.importance
 word_list = nltk.word_tokenize(sentence)
 
 lemmatizer = WordNetLemmatizer()
 lemmatized_output = (' '.join([lemmatizer.lemmatize(w) for w in word_list])).lower().strip()
 
-conjunctions = ["also", "although", "and", "as", "because", "before", "but", "for", "if", "nor", "of",
-"or", "since", "that", "though", "until", "when", "whenever", "whereas",
-"which", "while", "yet"]
+conjunctions = ["also", "although", "and", "as", "because", "before", "but", "for", "if", "nor", "of", "or", "since", "that", "though", "until", "when", "whenever", "whereas", "which", "while", "yet"]
 
 def findDifficulty(sentence):
     if sentence:
@@ -43,8 +43,6 @@ def calculateConfidence():
     else:
         return 1
 
-
-
 def addJSON(jsonObjs, key, success, importance, difficulty):
     newJSON = json.dumps({
         "key": lemmatized_output,
@@ -55,8 +53,28 @@ def addJSON(jsonObjs, key, success, importance, difficulty):
     })
     jsonObjs["commands"].append(newJSON)
 
-def updateJSON(jsonObjs, importance):
+def updateJSON():
     jsonCommands = jsonObjs["commands"]
     matchingObj = jsonCommands[lemmatized_output]
     matchingObj["performed"] += 1
     matchingObj["importance"].append(importance)
+
+output = ""
+ask = True
+if lemmatized_output in jsonObjs["commands"].keys():
+    confidence = calculateConfidence()
+    difficulty = findDifficulty()
+    updateJSON()
+    if confidence >= 0.9:
+        if difficulty >= 0.2:
+            ask = False
+    elif confidence >= 0.7:
+        if difficulty >= 0.1:
+            ask = False
+    elif confidence >= 0.5:
+        if difficulty < 0.1:
+            ask = False
+    else:
+        output = "My confidence in my ability is "+ confidence +". Should I proceed?"
+
+    

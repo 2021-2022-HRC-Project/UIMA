@@ -38,7 +38,9 @@ public class Controller {
 			analysisEngine.process(cas);
 			AnnotationIndex<Annotation> index = cas.getAnnotationIndex();
 			index.forEach(annotation -> log.info("Found annotation: " + annotation));
-			
+			for (Annotation i:index){
+				log.info(i);
+			}
 			cas.reset();
 		} catch (IOException e) {
 			log.fatal("Failed to load descriptor.");

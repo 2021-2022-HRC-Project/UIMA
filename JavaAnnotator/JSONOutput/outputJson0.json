@@ -3,28 +3,13 @@
     "Command": "pick up",
     "Target": {
       "relationModel": {
-        "Direction": "between",
-        "Objects": [
-          {
-            "item": "block",
-            "mods": [
-              "yellow"
-            ],
-            "gesture": false,
-            "belonging": "???"
-          },
-          {
-            "item": "block",
-            "mods": [
-              "purple"
-            ],
-            "gesture": false,
-            "belonging": "???"
-          }
-        ]
+        "Direction": "???",
+        "Objects": []
       },
       "item": "block",
-      "mods": [],
+      "mods": [
+        "blue"
+      ],
       "gesture": false,
       "belonging": "???"
     },

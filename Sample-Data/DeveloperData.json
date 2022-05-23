@@ -311,7 +311,8 @@
                     "sofa": 1,
                     "begin": 0,
                     "end": 0,
-                    "text": "Pick up the blue block"
+                    "text": "Pick up the blue block",
+                    "importance": 5
                 }
             ]
         }
