@@ -59,22 +59,27 @@ def updateJSON():
     matchingObj["performed"] += 1
     matchingObj["importance"].append(importance)
 
-output = ""
-ask = True
-if lemmatized_output in jsonObjs["commands"].keys():
-    confidence = calculateConfidence()
-    difficulty = findDifficulty()
-    updateJSON()
-    if confidence >= 0.9:
-        if difficulty >= 0.2:
-            ask = False
-    elif confidence >= 0.7:
-        if difficulty >= 0.1:
-            ask = False
-    elif confidence >= 0.5:
-        if difficulty < 0.1:
-            ask = False
-    else:
-        output = "My confidence in my ability is "+ confidence +". Should I proceed?"
+def getOutput():
+    output = ""
+    ask = True
+    if lemmatized_output in jsonObjs["commands"].keys():
+        confidence = calculateConfidence()
+        difficulty = findDifficulty()
+        updateJSON()
+        if confidence >= 0.9:
+            if difficulty >= 0.2:
+                ask = False
+        elif confidence >= 0.7:
+            if difficulty >= 0.1:
+                ask = False
+        elif confidence >= 0.5:
+            if difficulty < 0.1:
+                ask = False
+        else:
+            output = "My confidence in my ability is "+ confidence +". Should I proceed?"
+    return output
+def main():
 
-    
+
+if __name__ == '__main__':
+    main()
