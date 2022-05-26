@@ -21,9 +21,9 @@ public class TextToSpeechAnnotator extends Annotator{
 		String success = speak(feedback);
 		TextToSpeechType annotation= new TextToSpeechType("\"edu.rosehulman.aixprize.pipeline.types.TextToSpeech\"", success);
 
-		System.out.println("{" + annotation.getName() + ": "+ annotation.getFields() + "}");
-		
-		return "{" + annotation.getName() + ": "+ annotation.getFields() + "}";
+		final String responseText = "{" + annotation.getName() + ": [{\"success\" : "+ annotation.success + "}]}";
+		System.out.println(responseText);
+		return responseText;
 		
 	}
 	

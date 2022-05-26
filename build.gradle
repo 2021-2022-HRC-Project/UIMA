@@ -1,0 +1,17 @@
+wrapper {
+    gradleVersion = '7.2'
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = '1.0-SNAPSHOT'
+description = 'UIMA-Pipleine'
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    group = 'edu.rose-hulman'
+    extensions.findByType(JavaPluginExtension)?.toolchain?.languageVersion = JavaLanguageVersion.of(8)
+}

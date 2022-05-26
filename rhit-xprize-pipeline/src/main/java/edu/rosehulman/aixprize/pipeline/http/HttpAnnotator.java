@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,6 +30,8 @@ import org.json.*;
 import edu.rosehulman.aixprize.pipeline.http.HttpConfigurationLoader.NoConfigurationFound;
 
 public abstract class HttpAnnotator extends JCasAnnotator_ImplBase {
+	private static final Log LOG = LogFactory.getLog(HttpAnnotator.class);
+
 	public static class NoMatchingAnnotationException extends Exception {
 		private static final long serialVersionUID = 7484866497315133495L;
 	}
@@ -46,24 +50,24 @@ public abstract class HttpAnnotator extends JCasAnnotator_ImplBase {
 									   .setPath(configurationLoader.getPath(this.getClass()))
 									   .build().toString();
 			this.client = HttpClientBuilder.create().build();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (NoConfigurationFound | URISyntaxException e) {
+			LOG.fatal("HttpAnnotator is misconfigured.", e);
 		}
 	}
 
 	@Override
 	public void process(JCas cas) throws AnalysisEngineProcessException {
 		if (this.uri == null) {
+			LOG.warn("URI is null! (this is likely indicative of a configuration error)");
 			return;
 		}
-		
-		System.out.println(uri.toString());
+		LOG.info("URI: " + uri);
 		try {
 			RequestBuilder requestBuilder = RequestBuilder.post(uri);
 			requestBuilder.setEntity(encodeCas(cas));
 			receiveAnnotations(cas, this.client.execute(requestBuilder.build()));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("Failed to receive annotation from '" + uri + "'", e);
 		}
 	}
 
@@ -74,23 +78,26 @@ public abstract class HttpAnnotator extends JCasAnnotator_ImplBase {
 	}
 
 	private void receiveAnnotations(JCas cas, HttpResponse resp) throws IOException {
-		InputStream stream = resp.getEntity().getContent();
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		JSONObject annotationJson;
-
-		annotationJson = new JSONObject(reader.readLine());
-		for (String annotationName : JSONObject.getNames(annotationJson)) {
-			JSONArray jsonAnnotations = annotationJson.getJSONArray(annotationName);
-			List<Annotation> annotations = new ArrayList<>();
-			for (int i = 0; i < jsonAnnotations.length(); i++) {
-				try {
-					annotations.add(this.createAnnotation(cas, annotationName, jsonAnnotations.getJSONObject(i)));
-				} catch (Exception e) {
-					e.printStackTrace();
+		final InputStream contentStream = resp.getEntity().getContent();
+		try (final BufferedReader reader = new BufferedReader(new InputStreamReader(contentStream))) {
+			final String annotationText = reader.readLine();
+			LOG.info("Receiving annotation:\n" + annotationText);
+			final JSONObject annotationJson = new JSONObject(annotationText);
+			for (String annotationName : JSONObject.getNames(annotationJson)) {
+				JSONArray jsonAnnotations = annotationJson.getJSONArray(annotationName);
+				List<Annotation> annotations = new ArrayList<>();
+				for (int i = 0; i < jsonAnnotations.length(); i++) {
+					try {
+						annotations.add(this.createAnnotation(cas, annotationName, jsonAnnotations.getJSONObject(i)));
+					} catch (JSONException e) {
+						LOG.error("Failed to create annotation (or segment) from JSON - Malformed JSON Object:\n"
+								+ jsonAnnotations.getString(i), e);
+					} catch (Exception e) {
+						LOG.error("Failed to create annotation (or segment) from JSON", e);
+					}
 				}
+				annotations.forEach(Annotation::addToIndexes);
 			}
-
-			annotations.forEach(Annotation::addToIndexes);
 		}
 	}
 
@@ -108,7 +115,7 @@ public abstract class HttpAnnotator extends JCasAnnotator_ImplBase {
 			Feature feature = cas.getRequiredFeature(annotation.getType(), field);
 			annotation.setFeatureValueFromString(feature, annotationJson.get(field).toString());
 		} catch (CASException e) {
-			e.printStackTrace();
+			LOG.error("Failed to add field '" + field + "' to annotation: " + annotation);
 		}
 	}
 }
